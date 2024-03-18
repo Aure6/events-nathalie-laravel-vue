@@ -29,10 +29,12 @@ class EventController extends Controller
 
     public function show($id)
     {
-        // $article = Article::findOrFail($id);
+        $event = Event::findOrFail($id);
 
-        // return view('articles.show', [
-        //     'article' => $article,
-        // ]);
+        $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
+
+        return Inertia::render('Events/Show', [
+            'event' => $event,
+        ]);
     }
 }
