@@ -23,6 +23,7 @@ class EventFactory extends Factory
             'start' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
             'end' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
             'organizer_id' => Organizer::get()->random()->id,
+            'address' => $this->faker->address(),
         ];
     }
 }

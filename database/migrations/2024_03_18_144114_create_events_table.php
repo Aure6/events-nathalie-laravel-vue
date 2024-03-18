@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->foreignId('organizer_id')->constrained()->onDelete('cascade');
+            $table->string('address');
             $table->timestamps();
         });
     }

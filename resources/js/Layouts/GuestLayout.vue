@@ -41,7 +41,7 @@ function handleImageError() {
 
         <Banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-green-800">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -56,7 +56,7 @@ function handleImageError() {
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <NavLink :href="route('events.index')" :active="route().current('events.index')">
                                     Formations
                                 </NavLink>
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
