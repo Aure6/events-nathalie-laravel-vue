@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Organizer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,7 @@ class EventFactory extends Factory
             'description' => $this->faker->paragraph(2),
             'start' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
             'end' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
-            'organizer_id' => $this->faker->safeEmail(),
+            'organizer_id' => Organizer::get()->random()->id,
         ];
     }
 }
