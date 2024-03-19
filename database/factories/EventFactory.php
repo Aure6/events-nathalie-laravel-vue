@@ -20,6 +20,7 @@ class EventFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->paragraph(2),
+            'body' => $this->faker->paragraph(20),
             'start' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
             'end' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
             'organizer_id' => Organizer::get()->random()->id,

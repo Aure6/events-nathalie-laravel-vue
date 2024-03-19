@@ -1,5 +1,4 @@
 <script setup>
-import Welcome from '@/Components/Welcome.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Link } from '@inertiajs/vue3';
 

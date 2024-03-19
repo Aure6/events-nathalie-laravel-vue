@@ -1,5 +1,4 @@
 <script setup>
-import Welcome from '@/Components/Welcome.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Link } from '@inertiajs/vue3';
 
@@ -21,7 +20,7 @@ const props = defineProps(["events"]);
                         <!-- <Link v-for="event in events" :key="event.id" :href="route('events.show', event.id)"
                             class="p-4 duration-150 bg-green-100 rounded-xl hover:scale-105"> -->
                         <Link :href="route('events.show', { id: event.id })" v-for="event in events" :key="event.id"
-                            class="p-6 transition bg-green-100 rounded-lg hover:bg-green-200 hover:scale-105">
+                            class="p-6 transition bg-green-100 rounded-lg hover:bg-green-200">
                         <h3 class="mb-2 text-xl">
                             {{ event.name }}
                         </h3>
