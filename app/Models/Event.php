@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
+    protected $fillable = ['name', 'organizer_id', 'body', 'description', 'start', 'end', 'address'];
+
     use HasFactory;
 
     public function comments(): HasMany

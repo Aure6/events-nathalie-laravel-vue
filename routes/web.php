@@ -35,5 +35,5 @@ Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show'
 
 Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () {
     Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events');
-    Route::get('/admin/events/store', [AdminEventController::class, 'store'])->name('admin.events.store');
+    Route::post('/admin/events/store', [AdminEventController::class, 'store'])->name('admin.events.store');
 });

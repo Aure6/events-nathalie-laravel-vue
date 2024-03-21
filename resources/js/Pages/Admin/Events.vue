@@ -18,6 +18,7 @@ import { ref } from "vue";
 const props = defineProps(["events"]);
 
 const formCreateEvent = usePrecognitionForm("post", route("admin.events.store"), {
+    organizer_id: "",
     name: "",
     description: "",
     address: "",
@@ -31,10 +32,11 @@ formCreateEvent.setValidationTimeout(300);
 const CreateEvent = () => {
     formCreateEvent.submit({
         preserveScroll: true,
-        onSuccess: () => {
-            // On vide le champ après avoir créé la tâche
-            formCreateEvent.name = "";
-        },
+        onSuccess: () => form.reset(),
+        // onSuccess: () => {
+        //     // On vide le champ après avoir créé la tâche
+        //     formCreateEvent.name = "";
+        // },
     });
 };
 </script>
@@ -49,6 +51,9 @@ const CreateEvent = () => {
 
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <!-- <Link :href="route('events.create')" class="p-6 transition bg-green-100 rounded-lg hover:bg-green-200">
+                Nouveau
+                </Link> -->
                 <FormSection @submitted="CreateEvent">
                     <template #title>Nouvelle événement</template>
 
@@ -96,8 +101,8 @@ const CreateEvent = () => {
                         <!-- organizer_id -->
                         <div class="col-span-6 sm:col-span-4">
                             <InputLabel for="organizer_id" value="Organisateur de l'événement" />
-                            <select id="organizer_id" v-model="formCreateEvent.organizer_id" type="select"
-                                class="block w-full mt-1" @input="formCreateEvent.validate('organizer_id')">
+                            <select id="organizer_id" v-model="formCreateEvent.organizer_id" class="block w-full mt-1"
+                                @input="formCreateEvent.validate('organizer_id')">
                                 <option value="Chien">Chien</option>
                                 <option value="chat">Chat</option>
                             </select>

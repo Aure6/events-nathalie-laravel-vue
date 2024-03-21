@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\RedirectResponse;
@@ -53,35 +54,50 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)/* : RedirectResponse */
+    public function store(StoreEventRequest $request)/* : RedirectResponse */
     {
-        // $validated = $request->validated();
+        $validated = $request->validated();
 
         // Auth::user()->events()->create([
         //     'name' => $validated['name'],
         // ]);
 
-        $validated = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
-            'body' => 'required',
-            'address' => 'required',
+        // dd($validated);
+
+        Event::create([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'body' => $validated['body'],
+            'organizer_id' => $validated['organizer_id'],
+            'start' => $validated['start'],
+            'end' => $validated['end'],
+            'address' => $validated['address'],
         ]);
 
-        // Create a new instance of your model
-        $event = new Event;
+        // dd();
 
-        // Assign the validated data to the model's attributes
-        $event->name = $validated['name'];
-        $event->description = $validated['description'];
-        $event->body = $validated['body'];
-        $event->organizer_id = $validated['organizer_id'];
-        $event->start = $validated['start'];
-        $event->end = $validated['end'];
-        $event->address = $validated['address'];
+        // $validated = $request->validate([
+        //     'name' => 'required|max:3',
+        //     'description' => 'required|max:255',
+        //     'body' => 'required|max:3000',
+        //     'address' => 'required',
+        //     'organizer_id' => 'required',
+        // ]);
 
-        // Save the model instance to the database
-        $event->save();
+        // // Create a new instance of your model
+        // $event = new Event;
+
+        // // Assign the validated data to the model's attributes
+        // $event->name = $validated['name'];
+        // $event->description = $validated['description'];
+        // $event->body = $validated['body'];
+        // $event->organizer_id = $validated['organizer_id'];
+        // $event->start = $validated['start'];
+        // $event->end = $validated['end'];
+        // $event->address = $validated['address'];
+
+        // // Save the model instance to the database
+        // $event->save();
 
         // On affiche un message flash (notification toast) pour confirmer la création de la tâche.
         $request->session()->flash('flash.banner', 'L\'évèvennement a bien été créée.');
