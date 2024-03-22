@@ -38,7 +38,7 @@ class EventController extends Controller
             $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
         });
 
-        return Inertia::render('Admin/Events', [
+        return Inertia::render('Admin/Events/index', [
             'events' => $events,
         ]);
     }
@@ -48,7 +48,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Events/create', []);
     }
 
     /**
@@ -71,7 +71,7 @@ class EventController extends Controller
             'organizer_id' => $validated['organizer_id'],
             'start' => $validated['start'],
             'end' => $validated['end'],
-            'address' => $validated['address'],
+            'place' => $validated['place'],
         ]);
 
         // dd();

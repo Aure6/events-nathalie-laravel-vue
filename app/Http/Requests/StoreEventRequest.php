@@ -22,13 +22,13 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:2', 'max:255'],
+            'name' => ['required', 'max:255'],
             'description' => ['nullable', 'max:255'],
             'body' => ['nullable', 'max:3000'],
             'organizer_id' => ['nullable'],
             'start' => ['nullable'],
             'end' => ['nullable'],
-            'address' => ['nullable'],
+            'place' => ['nullable'],
         ];
     }
 }

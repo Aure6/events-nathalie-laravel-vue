@@ -19,6 +19,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "jodit": "^4.0.18",
         "laravel-precognition-vue-inertia": "^0.5.4"
     }
 }

@@ -18,13 +18,13 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
-            'description' => $this->faker->paragraph(2),
-            'body' => $this->faker->paragraph(20),
-            'start' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
-            'end' => $this->faker->dateTimeBetween('-52 week', '+52 week'),
+            'name' => $this->faker->bs(),
+            'description' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 200),
+            'body' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 2000),
+            'start' => $this->faker->dateTimeBetween('-52 week', '+52 week')->format('Y-m-d H:i'),
+            'end' => $this->faker->dateTimeBetween('-52 week', '+52 week')->format('Y-m-d H:i'),
             'organizer_id' => Organizer::get()->random()->id,
-            'address' => $this->faker->address(),
+            'place' => $this->faker->company(),
         ];
     }
 }

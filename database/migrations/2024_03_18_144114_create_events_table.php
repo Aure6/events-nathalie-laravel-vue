@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->text('body');
-            $table->dateTime('start')->nullable();
-            $table->dateTime('end')->nullable();
+            $table->string('start')->nullable();
+            $table->string('end')->nullable();
             $table->foreignId('organizer_id')->constrained()->onDelete('cascade');
-            $table->string('address');
+            $table->string('place');
             $table->timestamps();
         });
     }
