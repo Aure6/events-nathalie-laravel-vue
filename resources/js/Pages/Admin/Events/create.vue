@@ -44,7 +44,7 @@ const CreateEvent = () => {
 <template>
     <AppLayout title="Événements">
         <template #header>
-            <Link :href="route('admin.events.create')" class="p-2 text-white bg-blue-700 rounded-lg hover:bg-blue-900">
+            <Link :href="route('admin.events.create')" class="p-2 text-white rounded-lg bg-sky-700 hover:bg-sky-900">
             Nouveau
             </Link>
             <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800">
