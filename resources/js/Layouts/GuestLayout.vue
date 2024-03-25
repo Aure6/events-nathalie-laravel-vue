@@ -60,7 +60,7 @@ function handleImageError() {
                                     Formations
                                 </NavLink>
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Administration
+                                    Admin
                                 </NavLink>
                             </div>
                         </div>

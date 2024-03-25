@@ -23,6 +23,11 @@ class EventFactory extends Factory
             'body' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 2000),
             'start' => $this->faker->dateTimeBetween('-52 week', '+52 week')->format('Y-m-d H:i'),
             'end' => $this->faker->dateTimeBetween('-52 week', '+52 week')->format('Y-m-d H:i'),
+            'img_path' => function () {
+                $absolutePath = fake()->image(storage_path('app/public/images'), 640, 480, 'cats', true);
+
+                return str_replace(storage_path('app/public/'), '', $absolutePath);
+            },
             'organizer_id' => Organizer::get()->random()->id,
             'place' => $this->faker->company(),
         ];

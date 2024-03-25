@@ -17,10 +17,11 @@ const props = defineProps(["events"]);
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="p-6 overflow-hidden sm:rounded-lg">
                     <ul class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-                        <!-- <Link v-for="event in events" :key="event.id" :href="route('events.show', event.id)"
-                            class="p-4 duration-150 bg-green-100 rounded-xl hover:scale-105"> -->
-                        <Link :href="route('events.show', { id: event.id })" v-for="event in events" :key="event.id"
-                            class="p-6 transition bg-green-100 rounded-lg hover:bg-green-200">
+                        <Link :href="route('events.show', { id: event.id })" v-for="event in     events    "
+                            :key="event.id" class="p-6 transition bg-green-100 rounded-xl hover:bg-green-200">
+                        <!-- stored in storage/app/public/images -->
+                        <img v-if="event.img_path" class="rounded-t-xl" :src="'/storage/images/' + event.img_path" />
+                        <img v-else class="rounded-t-xl" src="/storage/images/event_placeholder.jpg" />
                         <h3 class="mb-2 text-xl">
                             {{ event.name }}
                         </h3>
@@ -36,7 +37,6 @@ const props = defineProps(["events"]);
                             </svg>{{ event.place }}
                         </div>
                         </Link>
-                        <!-- </Link> -->
                     </ul>
                 </div>
             </div>
