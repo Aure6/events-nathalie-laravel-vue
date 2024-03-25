@@ -29,7 +29,7 @@ Route::middleware([
 });
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.show');
 
 // Route::get('/admin/events', [EventController::class, 'show'])->name('admin.events');
 

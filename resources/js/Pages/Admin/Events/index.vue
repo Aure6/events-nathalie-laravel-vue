@@ -61,7 +61,7 @@ const CreateEvent = () => {
                     <ul class="">
                         <h3 class="font-bold">Annoncé</h3>
                         <Link :href="route('events.show', { id: event.id })" v-for="event in events" :key="event.id"
-                            class="grid grid-cols-3 bg-white border">
+                            class="grid grid-cols-3 bg-white border hover:border-blue-900">
                         <div class="flex items-center col-span-1 p-2 text-white bg-sky-700">
                             <div>
                                 <div>

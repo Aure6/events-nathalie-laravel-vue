@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
+use App\Models\Organizer;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -48,7 +49,11 @@ class EventController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Events/create', []);
+        $organizers = Organizer::orderBy('last_name', 'desc')->get();
+
+        return Inertia::render('Admin/Events/create', [
+            'organizers' => $organizers,
+        ]);
     }
 
     /**

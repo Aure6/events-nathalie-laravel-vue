@@ -15,7 +15,7 @@ import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
-const props = defineProps(["events"]);
+const props = defineProps(["organizers"]);
 
 const formCreateEvent = usePrecognitionForm("post", route("admin.events.store"), {
     organizer_id: "",
@@ -89,8 +89,9 @@ const CreateEvent = () => {
                             <InputLabel for="organizer_id" value="Organisateur de l'événement" />
                             <select id="organizer_id" v-model="formCreateEvent.organizer_id" class="block w-full mt-1"
                                 @input="formCreateEvent.validate('organizer_id')">
-                                <option value="Chien">Chien</option>
-                                <option value="chat">Chat</option>
+                                <option v-for="organizer in organizers" :key="organizer.id" value="organizer.id">
+                                    {{ organizer.first_name }}
+                                </option>
                             </select>
                             <InputError :message="formCreateEvent.errors.organizer_id" class="mt-2" />
                         </div>
