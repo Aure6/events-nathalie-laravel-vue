@@ -7,6 +7,7 @@ import DialogModal from "@/Components/DialogModal.vue";
 import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryLink from "@/Components/PrimaryLink.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SectionTitle from "@/Components/SectionTitle.vue";
@@ -44,12 +45,22 @@ const CreateEvent = () => {
 <template>
     <AppLayout title="Événements">
         <template #header>
-            <Link :href="route('admin.events.create')" class="p-2 text-white rounded-lg bg-sky-700 hover:bg-sky-900">
-            Nouveau
-            </Link>
+            <PrimaryLink :href="route('admin.events.create')">
+                Nouveau
+            </PrimaryLink>
             <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800">
                 Événements
             </h2>
+            <div class="flex justify-center">
+                <ActionMessage :on="formCreateEvent.recentlySuccessful" class="me-3">
+                    Sauvegardé.
+                </ActionMessage>
+
+                <PrimaryButton :class="{ 'opacity-25': formCreateEvent.processing }"
+                    :disabled="formCreateEvent.processing" class="mx-auto">
+                    Sauvegarder
+                </PrimaryButton>
+            </div>
         </template>
 
         <div class="py-4">
@@ -109,17 +120,6 @@ const CreateEvent = () => {
                         <textarea id="body" v-model="formCreateEvent.body" rows="5" class="block w-full mt-1"
                             @input="formCreateEvent.validate('body')" />
                         <InputError :message="formCreateEvent.errors.body" class="mt-2" />
-                    </div>
-
-                    <div class="flex justify-center">
-                        <ActionMessage :on="formCreateEvent.recentlySuccessful" class="me-3">
-                            Sauvegardé.
-                        </ActionMessage>
-
-                        <PrimaryButton :class="{ 'opacity-25': formCreateEvent.processing }"
-                            :disabled="formCreateEvent.processing" class="mx-auto">
-                            Sauvegarder
-                        </PrimaryButton>
                     </div>
                 </form>
             </div>

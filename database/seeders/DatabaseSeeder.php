@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Individual;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,6 +22,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
+            ContactSeeder::class,
+            CompanySeeder::class,
+            IndividualSeeder::class,
             OrganizerSeeder::class,
             EventSeeder::class,
             RegistrationSeeder::class,

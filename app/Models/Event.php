@@ -18,8 +18,13 @@ class Event extends Model
         return $this->hasMany(Registration::class);
     }
 
-    public function post(): BelongsTo
+    public function organizer(): BelongsTo
     {
         return $this->belongsTo(Organizer::class);
+    }
+
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class);
     }
 }

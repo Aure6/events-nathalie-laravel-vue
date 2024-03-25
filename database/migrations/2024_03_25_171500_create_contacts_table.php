@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
 
+            $table->string('VAT')->nullable(); // VAT number
+
             $table->string('email')->nullable();
-            $table->string('mobile')->nullable();
+            $table->string('phone')->nullable();
 
             $table->string('street')->nullable();
             $table->string('street2')->nullable();
@@ -23,6 +25,11 @@ return new class extends Migration
             $table->string('state')->nullable();
             $table->string('postcode')->nullable();
 
+            $table->string('website')->nullable();
+
+            // TODO étiquettes par ex. B2B, Vip, Conseil...
+
+            // if the contact is an individual, it must have a name and could have a job title and a title such as Mr
             $table->morphs('contactable'); // This will add contactable_id and contactable_type
 
             $table->timestamps();

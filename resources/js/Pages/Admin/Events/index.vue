@@ -7,6 +7,7 @@ import DialogModal from "@/Components/DialogModal.vue";
 import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryLink from "@/Components/PrimaryLink.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SectionTitle from "@/Components/SectionTitle.vue";
@@ -44,9 +45,9 @@ const CreateEvent = () => {
 <template>
     <AppLayout title="Événements">
         <template #header>
-            <Link :href="route('admin.events.create')" class="p-2 text-white rounded-lg bg-sky-700 hover:bg-sky-900">
-            Nouveau
-            </Link>
+            <PrimaryLink :href="route('admin.events.create')">
+                Nouveau
+            </PrimaryLink>
             <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800">
                 Événements
             </h2>
