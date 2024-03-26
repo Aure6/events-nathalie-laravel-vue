@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ContactController extends Controller
 {
@@ -12,7 +13,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contacts = Contact::with('contactable')->latest()->get();
+
+        return Inertia::render('Admin/Contacts/index', [
+            'contacts' => $contacts,
+        ]);
     }
 
     /**

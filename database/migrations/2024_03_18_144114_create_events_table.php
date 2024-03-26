@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('start')->nullable();
             $table->string('end')->nullable();
             $table->string('img_path')->nullable();
-            $table->foreignId('organizer_id')->constrained()->onDelete('cascade');
-            $table->string('place')->nullable();
+            $table->foreignId('organizer_id')->constrained()->onDelete('cascade')->nullable();
+            $table->foreignId('place_id')->constrained()->onDelete('cascade')->nullable();
+            // $table->string('place')->nullable();
             $table->timestamps();
         });
     }

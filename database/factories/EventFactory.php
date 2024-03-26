@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Contact;
 use App\Models\Organizer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -29,8 +30,10 @@ class EventFactory extends Factory
 
             //     return str_replace(storage_path('app/public/'), '', $absolutePath);
             // },
-            'organizer_id' => Organizer::get()->random()->id,
-            'place' => $this->faker->company(),
+            'organizer_id' => Contact::get()->random()->id,
+            // 'organizer_id' => Organizer::get()->random()->id,
+            'place_id' => Contact::get()->random()->id,
+            // 'place' => $this->faker->company(),
         ];
     }
 }

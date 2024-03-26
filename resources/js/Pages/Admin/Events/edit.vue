@@ -17,28 +17,28 @@ import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
-const props = defineProps(["organizers"]);
+const props = defineProps(["event", "organizers"]);
 
-const formCreateEvent = usePrecognitionForm("post", route("admin.events.store"), {
-    organizer_id: "",
-    name: "",
-    description: "",
-    place: "",
-    start: "",
-    end: "",
-    body: "",
+const formUpdateEvent = usePrecognitionForm("post", route("admin.events.update", {
+    event: props.event.id,
+}), {
+    organizer_id: props.event.organizer_id,
+    name: props.event.name,
+    description: props.event.description,
+    place: props.event.place,
+    start: props.event.start,
+    end: props.event.end,
+    body: props.event.body,
 });
 
-formCreateEvent.setValidationTimeout(300);
+formUpdateEvent.setValidationTimeout(300);
 
-const CreateEvent = () => {
-    formCreateEvent.submit({
+const updateEvent = () => {
+    formUpdateEvent.submit({
         preserveScroll: true,
-        onSuccess: () => form.reset(),
-        // onSuccess: () => {
-        //     // On vide le champ après avoir créé la tâche
-        //     formCreateEvent.name = "";
-        // },
+        onSuccess: () => {
+            //
+        },
     });
 };
 </script>
@@ -56,72 +56,71 @@ const CreateEvent = () => {
 
         <div class="py-4">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <form @submit.prevent="CreateEvent">
-
+                <form @submit.prevent="updateEvent">
                     <div class="flex justify-center">
-                        <ActionMessage :on="formCreateEvent.recentlySuccessful" class="me-3">
+                        <ActionMessage :on="formUpdateEvent.recentlySuccessful" class="me-3">
                             Sauvegardé.
                         </ActionMessage>
 
-                        <PrimaryButton :class="{ 'opacity-25': formCreateEvent.processing }"
-                            :disabled="formCreateEvent.processing" class="mx-auto">
+                        <PrimaryButton :class="{ 'opacity-25': formUpdateEvent.processing }"
+                            :disabled="formUpdateEvent.processing" class="mx-auto">
                             Sauvegarder
                         </PrimaryButton>
                     </div>
                     <!-- Name -->
                     <div class="col-span-6 sm:col-span-4">
                         <InputLabel for="name" value="Nom de l'événement" />
-                        <TextInput id="name" v-model="formCreateEvent.name" type="text"
-                            class="block w-full mt-1 text-lg" @input="formCreateEvent.validate('name')" />
-                        <InputError :message="formCreateEvent.errors.name" class="mt-2" />
+                        <TextInput id="name" v-model="formUpdateEvent.name" type="text"
+                            class="block w-full mt-1 text-lg" @input="formUpdateEvent.validate('name')" />
+                        <InputError :message="formUpdateEvent.errors.name" class="mt-2" />
                     </div>
                     <div class="grid grid-cols-2">
                         <!-- start -->
                         <div class="">
-                            <InputLabel for=" start" value="Début" />
-                            <TextInput id="start" v-model="formCreateEvent.start" type="datetime-local"
-                                class="block w-full mt-1" @input="formCreateEvent.validate('start')" />
-                            <InputError :message="formCreateEvent.errors.start" class="mt-2" />
+                            <InputLabel for="start" value="Début" />
+                            <TextInput id="start" v-model="formUpdateEvent.start" type="datetime-local"
+                                class="block w-full mt-1" @input="formUpdateEvent.validate('start')" />
+                            <InputError :message="formUpdateEvent.errors.start" class="mt-2" />
                         </div>
                         <!-- end -->
                         <div class="">
                             <InputLabel for="end" value="Fin" />
-                            <TextInput id="end" v-model="formCreateEvent.end" type="datetime-local"
-                                class="block w-full mt-1" @input="formCreateEvent.validate('end')" />
-                            <InputError :message="formCreateEvent.errors.end" class="mt-2" />
+                            <TextInput id="end" v-model="formUpdateEvent.end" type="datetime-local"
+                                class="block w-full mt-1" @input="formUpdateEvent.validate('end')" />
+                            <InputError :message="formUpdateEvent.errors.end" class="mt-2" />
                         </div>
                         <!-- place -->
                         <div class="">
                             <InputLabel for="place" value="Lieu" />
-                            <TextInput id="place" v-model="formCreateEvent.place" type="text" class="block w-full mt-1"
-                                @input="formCreateEvent.validate('place')" />
-                            <InputError :message="formCreateEvent.errors.place" class="mt-2" />
+                            <TextInput id="place" v-model="formUpdateEvent.place" type="text" class="block w-full mt-1"
+                                @input="formUpdateEvent.validate('place')" />
+                            <InputError :message="formUpdateEvent.errors.place" class="mt-2" />
                         </div>
                         <!-- organizer_id -->
                         <div class="">
                             <InputLabel for="organizer_id" value="Organisateur de l'événement" />
-                            <select id="organizer_id" v-model="formCreateEvent.organizer_id" class="block w-full mt-1"
-                                @input="formCreateEvent.validate('organizer_id')">
+                            <select id="organizer_id" v-model="formUpdateEvent.organizer_id" class="block w-full mt-1"
+                                @input="formUpdateEvent.validate('organizer_id')">
                                 <option v-for="organizer in organizers" :key="organizer.id" value="organizer.id">
                                     {{ organizer.first_name }}
                                 </option>
                             </select>
-                            <InputError :message="formCreateEvent.errors.organizer_id" class="mt-2" />
+                            <InputError :message="formUpdateEvent.errors.organizer_id" class="mt-2" />
                         </div>
                     </div>
                     <!-- description -->
                     <div class="">
                         <InputLabel for="description" value="Brève description affiché dans la liste des évènements" />
-                        <TextInput id="description" v-model="formCreateEvent.description" type="text"
-                            class="block w-full mt-1" @input="formCreateEvent.validate('description')" />
-                        <InputError :message="formCreateEvent.errors.description" class="mt-2" />
+                        <TextInput id="description" v-model="formUpdateEvent.description" type="text"
+                            class="block w-full mt-1" @input="formUpdateEvent.validate('description')" />
+                        <InputError :message="formUpdateEvent.errors.description" class="mt-2" />
                     </div>
                     <!-- body -->
                     <div class="">
                         <InputLabel for="body" value="Corps de texte de la page de l'événement" />
-                        <textarea id="body" v-model="formCreateEvent.body" rows="5" class="block w-full mt-1"
-                            @input="formCreateEvent.validate('body')" />
-                        <InputError :message="formCreateEvent.errors.body" class="mt-2" />
+                        <textarea id="body" v-model="formUpdateEvent.body" rows="5" class="block w-full mt-1"
+                            @input="formUpdateEvent.validate('body')" />
+                        <InputError :message="formUpdateEvent.errors.body" class="mt-2" />
                     </div>
                 </form>
             </div>

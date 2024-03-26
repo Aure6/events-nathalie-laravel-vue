@@ -7,6 +7,7 @@ use Inertia\Inertia;
 
 // autres imports ...
 use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::get('/', function () {
@@ -38,7 +39,14 @@ Route::middleware(HandlePrecognitiveRequests::class)->group(function () {
 });
 
 Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () {
+    Route::get('/admin/contacts', [ContactController::class, 'index'])->name('admin.contacts.index');
+    Route::get('/admin/contacts/create', [ContactController::class, 'create'])->name('admin.contacts.create');
+    Route::get('/admin/contacts/{contact}', [ContactController::class, 'edit'])->name('admin.contacts.edit');
+
     Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events.index');
     Route::get('/admin/events/create', [AdminEventController::class, 'create'])->name('admin.events.create');
     Route::post('/admin/events/store', [AdminEventController::class, 'store'])->name('admin.events.store');
+    Route::get('/admin/events/{event}/edit', [AdminEventController::class, 'edit'])->name('admin.events.edit');
+    Route::patch('/admin/events/{event}/update', [AdminEventController::class, 'update'])->name('admin.events.update');
+    Route::delete('/admin/events/delete', [AdminEventController::class, 'delete'])->name('admin.events.delete');
 });

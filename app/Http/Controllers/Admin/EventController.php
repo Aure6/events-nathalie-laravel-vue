@@ -63,10 +63,6 @@ class EventController extends Controller
     {
         $validated = $request->validated();
 
-        // Auth::user()->events()->create([
-        //     'name' => $validated['name'],
-        // ]);
-
         // dd($validated);
 
         Event::create([
@@ -80,29 +76,6 @@ class EventController extends Controller
         ]);
 
         // dd();
-
-        // $validated = $request->validate([
-        //     'name' => 'required|max:3',
-        //     'description' => 'required|max:255',
-        //     'body' => 'required|max:3000',
-        //     'address' => 'required',
-        //     'organizer_id' => 'required',
-        // ]);
-
-        // // Create a new instance of your model
-        // $event = new Event;
-
-        // // Assign the validated data to the model's attributes
-        // $event->name = $validated['name'];
-        // $event->description = $validated['description'];
-        // $event->body = $validated['body'];
-        // $event->organizer_id = $validated['organizer_id'];
-        // $event->start = $validated['start'];
-        // $event->end = $validated['end'];
-        // $event->address = $validated['address'];
-
-        // // Save the model instance to the database
-        // $event->save();
 
         $request->session()->flash('flash.banner', "L'évènement a bien été créée.");
 
@@ -122,7 +95,14 @@ class EventController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        $organizers = Organizer::orderBy('last_name', 'desc')->get();
+
+        return Inertia::render('Admin/Events/edit', [
+            'event' => $event,
+            'organizers' => $organizers,
+        ]);
     }
 
     /**
@@ -136,8 +116,10 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(Event $event)
     {
-        //
+        $event->delete();
+
+        session()->flash('flash.banner', "L'évènement a bien été supprimé.");
     }
 }
