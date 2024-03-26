@@ -51,21 +51,22 @@ const CreateEvent = () => {
             <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800">
                 Événements
             </h2>
-            <div class="flex justify-center">
-                <ActionMessage :on="formCreateEvent.recentlySuccessful" class="me-3">
-                    Sauvegardé.
-                </ActionMessage>
-
-                <PrimaryButton :class="{ 'opacity-25': formCreateEvent.processing }"
-                    :disabled="formCreateEvent.processing" class="mx-auto">
-                    Sauvegarder
-                </PrimaryButton>
-            </div>
         </template>
 
         <div class="py-4">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <form @submit.prevent="CreateEvent">
+
+                    <div class="flex justify-center">
+                        <ActionMessage :on="formCreateEvent.recentlySuccessful" class="me-3">
+                            Sauvegardé.
+                        </ActionMessage>
+
+                        <PrimaryButton :class="{ 'opacity-25': formCreateEvent.processing }"
+                            :disabled="formCreateEvent.processing" class="mx-auto">
+                            Sauvegarder
+                        </PrimaryButton>
+                    </div>
                     <!-- Name -->
                     <div class="col-span-6 sm:col-span-4">
                         <InputLabel for="name" value="Nom de l'événement" />

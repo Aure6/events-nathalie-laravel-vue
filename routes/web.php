@@ -33,6 +33,10 @@ Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.
 
 // Route::get('/admin/events', [EventController::class, 'show'])->name('admin.events');
 
+Route::middleware(HandlePrecognitiveRequests::class)->group(function () {
+    Route::post('/events/{event}/registrations/store', [AdminEventController::class, 'store'])->name('registrations.store');
+});
+
 Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () {
     Route::get('/admin/events', [AdminEventController::class, 'index'])->name('admin.events.index');
     Route::get('/admin/events/create', [AdminEventController::class, 'create'])->name('admin.events.create');

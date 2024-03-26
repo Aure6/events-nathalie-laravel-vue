@@ -104,8 +104,7 @@ class EventController extends Controller
         // // Save the model instance to the database
         // $event->save();
 
-        // On affiche un message flash (notification toast) pour confirmer la création de la tâche.
-        $request->session()->flash('flash.banner', 'L\'évèvennement a bien été créée.');
+        $request->session()->flash('flash.banner', "L'évènement a bien été créée.");
 
         return redirect()->back();
     }

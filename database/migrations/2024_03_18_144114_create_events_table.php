@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->text('body');
+            $table->text('description')->nullable();
+            $table->text('body')->nullable();
             $table->string('start')->nullable();
             $table->string('end')->nullable();
             $table->string('img_path')->nullable();
             $table->foreignId('organizer_id')->constrained()->onDelete('cascade');
-            $table->string('place');
+            $table->string('place')->nullable();
             $table->timestamps();
         });
     }
