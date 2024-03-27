@@ -3,18 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegistrationRequest;
+use App\Models\Event;
 use App\Models\Registration;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class RegistrationController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $event)
     {
-        //
+        $registrations = Registration::where('event_id', '=', $event)->latest()->get();
+
+        $event = Event::findOrFail($event);
+
+        // Add the month as a property of each event
+        // $events->each(function ($event) {
+        //     $event->month_start = $event->start->format('F');
+        // });
+
+        // Add the month as a property of each event
+        // $events->each(function ($event) {
+        //     $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
+        // });
+
+        return Inertia::render('Admin/Events/Registrations/index', [
+            'registrations' => $registrations,
+            'event' => $event,
+        ]);
     }
 
     /**

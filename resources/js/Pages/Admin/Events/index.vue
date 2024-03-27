@@ -4,13 +4,11 @@ import { Link } from '@inertiajs/vue3';
 import ActionMessage from "@/Components/ActionMessage.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import DialogModal from "@/Components/DialogModal.vue";
-import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryLink from "@/Components/PrimaryLink.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import SectionTitle from "@/Components/SectionTitle.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia";
 import { useForm } from "@inertiajs/vue3";
@@ -59,7 +57,7 @@ const CreateEvent = () => {
             <PrimaryButton @click="confirmCreateEvent" type="button">
                 Nouveau
             </PrimaryButton>
-            <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800 ">
+            <h2 class="inline-block ml-4 text-lg font-semibold leading-tight text-gray-800 ">
                 Événements
             </h2>
         </template>

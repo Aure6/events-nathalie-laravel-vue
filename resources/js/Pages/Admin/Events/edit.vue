@@ -4,14 +4,12 @@ import { Link } from '@inertiajs/vue3';
 import ActionMessage from "@/Components/ActionMessage.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import DialogModal from "@/Components/DialogModal.vue";
-import FormSection from "@/Components/FormSection.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryLink from "@/Components/PrimaryLink.vue";
 import SecondaryLink from "@/Components/SecondaryLink.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import SectionTitle from "@/Components/SectionTitle.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia";
 import { useForm } from "@inertiajs/vue3";
@@ -19,7 +17,7 @@ import { ref } from "vue";
 
 const props = defineProps(["event", "organizers"]);
 
-const formUpdateEvent = usePrecognitionForm("post", route("admin.events.update", {
+const formUpdateEvent = usePrecognitionForm("patch", route("admin.events.update", {
     event: props.event.id,
 }), {
     organizer_id: props.event.organizer_id,
@@ -46,12 +44,23 @@ const updateEvent = () => {
 <template>
     <AppLayout title="Événements">
         <template #header>
-            <SecondaryLink :href="route('admin.events.create')">
-                Nouveau
-            </SecondaryLink>
-            <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800">
-                Événements
-            </h2>
+            <div class="flex">
+                <div class="inline-block">
+                    <SecondaryLink :href="route('admin.events.create')">
+                        Nouveau
+                    </SecondaryLink>
+                    <Link :href="route('admin.events.index')">
+                    <h2 class="inline-block ml-4 text-lg font-semibold leading-tight text-sky-800">
+                        Événements
+                    </h2>
+                    </Link>
+                </div>
+                <div class="inline-block mx-auto ">
+                    <SecondaryLink :href="route('registrations.index', event.id)">
+                        Inscriptions
+                    </SecondaryLink>
+                </div>
+            </div>
         </template>
 
         <div class="py-4">

@@ -8,6 +8,7 @@ use Inertia\Inertia;
 // autres imports ...
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RegistrationController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::get('/', function () {
@@ -35,7 +36,8 @@ Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.
 // Route::get('/admin/events', [EventController::class, 'show'])->name('admin.events');
 
 Route::middleware(HandlePrecognitiveRequests::class)->group(function () {
-    Route::post('/events/{event}/registrations/store', [AdminEventController::class, 'store'])->name('registrations.store');
+    Route::get('/events/{event}/registrations', [RegistrationController::class, 'index'])->name('registrations.index');
+    Route::post('/events/{event}/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
 });
 
 Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () {

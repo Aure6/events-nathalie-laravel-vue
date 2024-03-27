@@ -14,7 +14,6 @@ use Inertia\Inertia;
 
 class EventController extends Controller
 {
-
     // public function __construct()
     // {
     //     // On applique le middleware HandlePrecognitiveRequests à la méthode store() uniquement.
@@ -112,9 +111,21 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreEventRequest $request, string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        $validated = $request->validated();
+
+        // dd($validated);
+
+        $event->update($validated);
+
+        // dd();
+
+        $request->session()->flash('flash.banner', "L'évènement a bien été mis à jour.");
+
+        return redirect()->back();
     }
 
     /**

@@ -29,7 +29,7 @@ const props = defineProps(["contacts"]);
             <!-- <PrimaryLink :href="route('admin.contacts.create')">
                 Nouveau
             </PrimaryLink> -->
-            <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800">
+            <h2 class="inline-block ml-4 text-lg font-semibold leading-tight text-gray-800">
                 Contacts
             </h2>
         </template>
