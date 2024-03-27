@@ -80,6 +80,10 @@ class EventController extends Controller
         $request->session()->flash('flash.banner', "L'évènement a bien été créée.");
 
         return redirect()->back();
+        // return Inertia::render('Admin/Events/edit', [
+        //     'event' => $event,
+        //     'organizers' => $organizers,
+        // ]);
     }
 
     /**

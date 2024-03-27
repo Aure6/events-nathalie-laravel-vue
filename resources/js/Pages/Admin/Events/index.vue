@@ -18,6 +18,17 @@ import { ref } from "vue";
 
 const props = defineProps(["events"]);
 
+const confirmingCreateEvent = ref(false);
+const confirmCreateEvent = () => {
+    confirmingCreateEvent.value = true;
+};
+
+const closeModal = () => {
+    confirmingCreateEvent.value = false;
+
+    formCreateEvent.reset();
+};
+
 const formCreateEvent = usePrecognitionForm("post", route("admin.events.store"), {
     organizer_id: "",
     name: "",
@@ -33,7 +44,7 @@ formCreateEvent.setValidationTimeout(300);
 const CreateEvent = () => {
     formCreateEvent.submit({
         preserveScroll: true,
-        onSuccess: () => form.reset(),
+        onSuccess: () => closeModal(),
         // onSuccess: () => {
         //     // On vide le champ après avoir créé la tâche
         //     formCreateEvent.name = "";
@@ -45,10 +56,10 @@ const CreateEvent = () => {
 <template>
     <AppLayout title="Événements">
         <template #header>
-            <PrimaryLink :href="route('admin.events.create')">
+            <PrimaryButton @click="confirmCreateEvent" type="button">
                 Nouveau
-            </PrimaryLink>
-            <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800">
+            </PrimaryButton>
+            <h2 class="inline-block ml-4 text-xl font-semibold leading-tight text-gray-800 ">
                 Événements
             </h2>
         </template>
@@ -97,5 +108,42 @@ const CreateEvent = () => {
                 </div>
             </div>
         </div>
+
+        <!-- Create event modal -->
+        <form @submit.prevent="CreateEvent">
+            <DialogModal :show="confirmingCreateEvent" @close="closeModal">
+                <template #title>
+                    Créer un évènement
+                </template>
+                <!-- CreateEvent -->
+
+                <template #content>
+                    Pour créer un évènement, entrez le nom de l'évènement
+
+                    <div class="mt-4">
+                        <InputLabel for="name" value="Nom de l'événement" />
+                        <TextInput id="name" v-model="formCreateEvent.name" type="text"
+                            class="block w-full mt-1 text-lg" @input="formCreateEvent.validate('name')" />
+                        <InputError :message="formCreateEvent.errors.name" class="mt-2" />
+                    </div>
+                </template>
+
+                <template #footer>
+                    <SecondaryButton @click="closeModal">
+                        Cancel
+                    </SecondaryButton>
+
+                    <!-- <DangerButton class="ms-3" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"
+                    @click="deleteUser">
+                    Delete Account
+                </DangerButton> -->
+
+                    <PrimaryButton :class="{ 'opacity-25': formCreateEvent.processing }"
+                        :disabled="formCreateEvent.processing" class="ms-3">
+                        Créer
+                    </PrimaryButton>
+                </template>
+            </DialogModal>
+        </form>
     </AppLayout>
 </template>
