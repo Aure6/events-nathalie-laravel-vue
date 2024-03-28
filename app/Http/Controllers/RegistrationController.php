@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Models\Event;
 use App\Models\Registration;
+use DateTime;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,15 +21,9 @@ class RegistrationController extends Controller
 
         $event = Event::findOrFail($event);
 
-        // Add the month as a property of each event
-        // $events->each(function ($event) {
-        //     $event->month_start = $event->start->format('F');
-        // });
-
-        // Add the month as a property of each event
-        // $events->each(function ($event) {
-        //     $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
-        // });
+        $registrations->each(function ($registration) {
+            $registration->date = \Carbon\Carbon::parse($registration->created_at)->format('Y-m-d H:i:s');
+        });
 
         return Inertia::render('Admin/Events/Registrations/index', [
             'registrations' => $registrations,
@@ -49,14 +44,17 @@ class RegistrationController extends Controller
      */
     public function store(StoreRegistrationRequest $request)
     {
-        $validated = $request->validated();
+        dd($request);
+        Registration::create($request->validated());
+        // $validated = $request->validated();
 
-        Registration::create([
-            'first_name' => $validated['first_name'],
-            'last_name' => $validated['last_name'],
-            'email' => $validated['email'],
-            'event_id' => $validated['event_id'],
-        ]);
+        // Registration::create([
+        //     'first_name' => $validated['first_name'],
+        //     'last_name' => $validated['last_name'],
+        //     'phone' => $validated['phone'],
+        //     'email' => $validated['email'],
+        //     'event_id' => $validated['event_id'],
+        // ]);
 
         $request->session()->flash('flash.banner', "Votre inscription à l'évènement a bien été créée.");
 

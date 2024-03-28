@@ -10,8 +10,9 @@ import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia
 const props = defineProps(["event"]);
 
 const formCreateRegistration = usePrecognitionForm("post", route("registrations.store", { event: props.event.id }), {
-    first_name: "",
-    last_name: "",
+    name: "",
+    phone: "",
+    company_name: "",
     email: "",
     /* event_id: event.id, */
 });
@@ -72,28 +73,33 @@ const CreateRegistration = () => {
                     </div>
                     <form @submit.prevent="CreateRegistration" class="max-w-2xl py-6 mx-auto space-y-4 sm:px-6 lg:px-8">
                         <h3 class="text-xl">Inscrivez-vous!</h3>
-                        <!-- first_name -->
+                        <!-- name -->
                         <div class="">
-                            <InputLabel for="first_name" value="Prénom" />
-                            <TextInput id="first_name" v-model="formCreateRegistration.first_name" type="text"
-                                class="block w-full mt-1 text-lg"
-                                @input="formCreateRegistration.validate('first_name')" />
-                            <InputError :message="formCreateRegistration.errors.first_name" class="mt-2" />
-                        </div>
-                        <!-- last_name -->
-                        <div class="">
-                            <InputLabel for="last_name" value="Nom de famille" />
-                            <TextInput id="last_name" v-model="formCreateRegistration.last_name" type="text"
-                                class="block w-full mt-1 text-lg"
-                                @input="formCreateRegistration.validate('last_name')" />
-                            <InputError :message="formCreateRegistration.errors.last_name" class="mt-2" />
+                            <InputLabel for="name" value="Votre nom*" />
+                            <TextInput id="name" v-model="formCreateRegistration.name" type="text"
+                                class="block w-full mt-1" @input="formCreateRegistration.validate('name')" />
+                            <InputError :message="formCreateRegistration.errors.name" class="mt-2" />
                         </div>
                         <!-- email -->
                         <div class="">
-                            <InputLabel for="email" value="Adresse email" />
+                            <InputLabel for="email" value="Votre adresse email*" />
                             <TextInput id="email" v-model="formCreateRegistration.email" type="text"
-                                class="block w-full mt-1 text-lg" @input="formCreateRegistration.validate('email')" />
+                                class="block w-full mt-1" @input="formCreateRegistration.validate('email')" />
                             <InputError :message="formCreateRegistration.errors.email" class="mt-2" />
+                        </div>
+                        <!-- phone -->
+                        <div class="">
+                            <InputLabel for="company_name" value="Numéro de téléphone" />
+                            <TextInput id="company_name" v-model="formCreateRegistration.company_name" type="text"
+                                class="block w-full mt-1" @input="formCreateRegistration.validate('company_name')" />
+                            <InputError :message="formCreateRegistration.errors.company_name" class="mt-2" />
+                        </div>
+                        <!-- company_name -->
+                        <div class="">
+                            <InputLabel for="company_name" value="Nom de la société" />
+                            <TextInput id="company_name" v-model="formCreateRegistration.company_name" type="text"
+                                class="block w-full mt-1" @input="formCreateRegistration.validate('company_name')" />
+                            <InputError :message="formCreateRegistration.errors.company_name" class="mt-2" />
                         </div>
 
                         <div class="flex justify-center">

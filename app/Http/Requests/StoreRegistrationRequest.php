@@ -11,7 +11,7 @@ class StoreRegistrationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,9 +22,10 @@ class StoreRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'max:255'],
-            'last_name' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
             'email' => ['required', 'max:255'],
+            'phone' => ['max:255'],
+            'company_name' => ['max:255'],
         ];
     }
 }

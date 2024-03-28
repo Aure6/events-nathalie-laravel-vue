@@ -18,9 +18,10 @@ class RegistrationFactory extends Factory
     public function definition(): array
     {
         return [
-            'last_name' => $this->faker->lastName(),
-            'first_name' => $this->faker->firstName(),
+            'name' => $this->faker->name(),
             'email' => $this->faker->safeEmail(),
+            'phone' => $this->faker->phoneNumber(),
+            'company_name' => $this->faker->company(),
             'event_id' => Event::get()->random()->id,
         ];
     }

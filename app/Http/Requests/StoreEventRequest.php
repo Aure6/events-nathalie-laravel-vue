@@ -28,7 +28,7 @@ class StoreEventRequest extends FormRequest
             'organizer_id' => ['nullable'],
             'start' => ['nullable'],
             'end' => ['nullable'],
-            'place' => ['nullable'],
+            'place_id' => ['nullable'],
         ];
     }
 }

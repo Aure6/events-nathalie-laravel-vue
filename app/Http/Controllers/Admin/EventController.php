@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventRequest;
+use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Organizer;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -64,15 +65,17 @@ class EventController extends Controller
 
         // dd($validated);
 
-        Event::create([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-            'body' => $validated['body'],
-            'organizer_id' => $validated['organizer_id'],
-            'start' => $validated['start'],
-            'end' => $validated['end'],
-            'place' => $validated['place'],
-        ]);
+        Event::create($validated);
+
+        // Event::create([
+        //     'name' => $validated['name'],
+        //     'description' => $validated['description'],
+        //     'body' => $validated['body'],
+        //     'organizer_id' => $validated['organizer_id'],
+        //     'start' => $validated['start'],
+        //     'end' => $validated['end'],
+        //     'place' => $validated['place'],
+        // ]);
 
         // dd();
 
@@ -101,10 +104,11 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
 
         $organizers = Organizer::orderBy('last_name', 'desc')->get();
+        $contacts = Contact::with('contactable')->latest()->get();
 
         return Inertia::render('Admin/Events/edit', [
             'event' => $event,
-            'organizers' => $organizers,
+            'contacts' => $contacts,
         ]);
     }
 

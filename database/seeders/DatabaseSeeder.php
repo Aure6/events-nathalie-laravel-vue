@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            ContactSeeder::class,
             CompanySeeder::class,
             IndividualSeeder::class,
+            ContactSeeder::class,
             OrganizerSeeder::class,
             EventSeeder::class,
             RegistrationSeeder::class,

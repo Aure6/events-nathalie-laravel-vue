@@ -13,6 +13,6 @@ class IndividualSeeder extends Seeder
      */
     public function run(): void
     {
-        // Individual::factory(3)->create();
+        Individual::factory(10)->create();
     }
 }

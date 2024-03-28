@@ -19,8 +19,15 @@ return new class extends Migration
             $table->string('start')->nullable();
             $table->string('end')->nullable();
             $table->string('img_path')->nullable();
-            $table->foreignId('organizer_id')->constrained()->onDelete('cascade')->nullable();
-            $table->foreignId('place_id')->constrained()->onDelete('cascade')->nullable();
+
+            // $table->foreignId('organizer_id')->constrained()->onDelete('cascade')->nullable();
+            $table->unsignedBigInteger('organizer_id');
+            $table->foreign('organizer_id')->references('id')->on('contacts');
+
+            // $table->foreignId('place_id')->constrained()->onDelete('cascade')->nullable();
+            $table->unsignedBigInteger('place_id');
+            $table->foreign('place_id')->references('id')->on('contacts');
+
             // $table->string('place')->nullable();
             $table->timestamps();
         });
