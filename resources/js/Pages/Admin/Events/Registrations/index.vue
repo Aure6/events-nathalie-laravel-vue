@@ -17,6 +17,15 @@ import { ref } from "vue";
 const props = defineProps(["registrations", "event"]);
 
 // console.log(props.registrations);
+const formDeleteRegistration = useForm("delete", {});
+const deleteRegistration = (registrationId) => {
+    formDeleteRegistration.delete(route("registrations.destroy", registrationId), {
+        preserveScroll: true,
+        onSuccess: () => {
+            confirmingTaskDeletion.value = false;
+        },
+    });
+};
 </script>
 
 <template>
@@ -53,10 +62,10 @@ const props = defineProps(["registrations", "event"]);
                             <th scope="col">Nom du participant</th>
                             <th scope="col">Email</th>
                             <th scope="col">Téléphone</th>
-                            <th scope="col">Ticket d'évènement</th>
+                            <!-- <th scope="col">Ticket d'évènement</th> -->
                             <!-- <th scope="col">Activités</th> -->
-                            <th scope="col">Statut</th>
-                            <th scope="col">Statut de la vente</th>
+                            <!-- <th scope="col">Statut</th> -->
+                            <!-- <th scope="col">Statut de la vente</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -66,6 +75,16 @@ const props = defineProps(["registrations", "event"]);
                             <td>{{ registration.name }}</td>
                             <td>{{ registration.email }}</td>
                             <td>{{ registration.phone }}</td>
+                            <td class="text-red-500"><button
+                                    class="transition-all rounded hover:ring-red-500 hover:ring-2 hover:text-white hover:bg-red-500"
+                                    @click="deleteRegistration(registration.id)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                        class="inline-block w-6 h-6">
+                                        <path fill-rule="evenodd"
+                                            d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    Annuler</button></td>
                         </tr>
                     </tbody>
                 </table>

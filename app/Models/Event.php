@@ -13,7 +13,7 @@ class Event extends Model
 
     use HasFactory;
 
-    public function comments(): HasMany
+    public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class);
     }

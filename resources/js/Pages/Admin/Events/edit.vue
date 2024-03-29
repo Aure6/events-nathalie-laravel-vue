@@ -123,6 +123,7 @@ const updateEvent = () => {
                         <InputError :message="formUpdateEvent.errors.organizer_id" class="mt-2" />
                     </div>
                     <!-- Limiter les inscriptions -->
+                    <!-- statut de l'event brouillon, RSVP, annoncé avec tag radio -->
                 </div>
                 <!-- description -->
                 <div class="">

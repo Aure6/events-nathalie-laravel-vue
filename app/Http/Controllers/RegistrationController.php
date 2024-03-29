@@ -44,17 +44,18 @@ class RegistrationController extends Controller
      */
     public function store(StoreRegistrationRequest $request)
     {
-        dd($request);
-        Registration::create($request->validated());
-        // $validated = $request->validated();
+        // dd($request);
+        // Registration::create($request->validated());
 
-        // Registration::create([
-        //     'first_name' => $validated['first_name'],
-        //     'last_name' => $validated['last_name'],
-        //     'phone' => $validated['phone'],
-        //     'email' => $validated['email'],
-        //     'event_id' => $validated['event_id'],
-        // ]);
+        $validated = $request->validated();
+
+        Registration::create([
+            'name' => $validated['name'],
+            'company_name' => $validated['company_name'],
+            'phone' => $validated['phone'],
+            'email' => $validated['email'],
+            'event_id' => $validated['event_id'],
+        ]);
 
         $request->session()->flash('flash.banner', "Votre inscription à l'évènement a bien été créée.");
 
@@ -90,6 +91,11 @@ class RegistrationController extends Controller
      */
     public function destroy(Registration $registration)
     {
-        //
+        $registration->delete();
+
+        // On affiche un message flash (notification toast) pour confirmer la suppression de la tâche.
+        session()->flash('flash.banner', "L'inscription a bien été supprimée.");
+
+        return redirect()->back();
     }
 }

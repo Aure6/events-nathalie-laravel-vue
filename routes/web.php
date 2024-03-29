@@ -37,6 +37,7 @@ Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.
 
 Route::middleware(HandlePrecognitiveRequests::class)->group(function () {
     Route::post('/events/{event}/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
+    // Route::post('/events/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
 });
 
 Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () {
@@ -52,4 +53,5 @@ Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () 
     Route::delete('/admin/events/delete', [AdminEventController::class, 'delete'])->name('admin.events.delete');
 
     Route::get('/events/{event}/registrations', [RegistrationController::class, 'index'])->name('registrations.index');
+    Route::delete('/events/{event}/registrations/{registration}/delete', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
 });

@@ -35,6 +35,8 @@ class ContactFactory extends Factory
 
             'city' => $this->faker->city(),
             'state' => $this->faker->state(),
+            'street' => $this->faker->streetAddress(),
+            'postcode' => $this->faker->postcode(),
         ];
     }
 }

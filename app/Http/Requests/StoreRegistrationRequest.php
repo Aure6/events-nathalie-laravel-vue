@@ -22,10 +22,18 @@ class StoreRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:255'],
-            'email' => ['required', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255', 'unique:registrations', 'email'],
             'phone' => ['max:255'],
             'company_name' => ['max:255'],
+            'event_id' => ['required', 'integer', 'exists:App\Models\Event,id'],
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Un prénom et un nom sont requis',
+            'email.required' => 'Une adresse email est requises',
         ];
     }
 }

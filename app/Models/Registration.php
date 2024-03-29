@@ -10,7 +10,9 @@ class Registration extends Model
 {
     use HasFactory;
 
-    public function post(): BelongsTo
+    protected $fillable = ['name', 'company_name', 'email',  'phone'];
+
+    public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
     }
