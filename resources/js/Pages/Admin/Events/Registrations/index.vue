@@ -43,7 +43,7 @@ const IsRegistrationEmpty = computed(() => {
 });
 </script>
 
-<template>
+<template >
     <AppLayout title="Inscriptions">
         <template #header>
             <!-- <PrimaryButton @click="confirmCreateEvent" type="button">
@@ -67,7 +67,7 @@ const IsRegistrationEmpty = computed(() => {
         <div class="border-t-2">
             <div class="mx-auto">
                 <!-- TODO data table from PrimeVue? -->
-                <table class="w-full bg-white">
+                <table class="w-full h-full overflow-auto bg-white">
                     <!-- <Link :href="route('admin.events.edit', { id: event.id })" v-for="event in events"
                             :key="event.id" class="grid grid-cols-3 bg-white border hover:border-sky-900">
                         </Link> -->
@@ -132,4 +132,4 @@ const IsRegistrationEmpty = computed(() => {
             </DangerButton>
         </template>
     </DialogModal>
-</template>
+</template>h-fulloverflow-auto
