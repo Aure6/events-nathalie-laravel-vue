@@ -17,15 +17,26 @@ import { computed, ref } from "vue";
 const props = defineProps(["registrations", "event"]);
 
 // console.log(props.registrations);
+const confirmingRegistrationDeletion = ref(false);
+const registrationIdToDelete = ref(null);
 const formDeleteRegistration = useForm("delete", {});
-const deleteRegistration = (registrationId) => {
-    formDeleteRegistration.delete(route("registrations.destroy", registrationId), {
+const confirmRegistrationDeletion = (id) => {
+    registrationIdToDelete.value = id;
+    confirmingRegistrationDeletion.value = true;
+};
+const deleteRegistration = () => {
+    // console.log(registrationIdToDelete.value);
+    formDeleteRegistration.delete(route("registrations.destroy", { registration: registrationIdToDelete.value }), {
         preserveScroll: true,
         onSuccess: () => {
-            confirmingTaskDeletion.value = false;
+            confirmingRegistrationDeletion.value = false;
         },
     });
 };
+const closeModal = () => {
+    confirmingRegistrationDeletion.value = false;
+};
+
 console.log(props.registrations.length);
 const IsRegistrationEmpty = computed(() => {
     return props.registrations.length === 0 ? true : false;
@@ -73,7 +84,10 @@ const IsRegistrationEmpty = computed(() => {
                         </tr>
                     </thead>
                     <tbody>
-                        <div v-if="IsRegistrationEmpty">Aucune inscription trouvée.</div>
+                        <tr v-if="IsRegistrationEmpty" class="mx-auto text-center h-96"><td colspan="10" class="space-y-4">
+                            <div class="text-2xl">Aucune inscription trouvée.</div>
+                            <div class="text-lg text-gray-700">Attendez que les participants s'inscrivent à votre événement. <!-- ou créez leurs inscriptions manuellement. --></div>
+                        </td></tr>
                         <tr v-for="registration in registrations" :key="registration.id"
                             class="border hover:bg-sky-200">
                             <td>{{ registration.date }}</td>
@@ -82,7 +96,7 @@ const IsRegistrationEmpty = computed(() => {
                             <td>{{ registration.phone }}</td>
                             <td class="text-red-500"><button
                                     class="transition-all rounded hover:ring-red-500 hover:ring-2 hover:text-white hover:bg-red-500"
-                                    @click="deleteRegistration(registration.id)">
+                                    @click="confirmRegistrationDeletion(registration.id)">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                         class="inline-block w-6 h-6">
                                         <path fill-rule="evenodd"
@@ -96,4 +110,26 @@ const IsRegistrationEmpty = computed(() => {
             </div>
         </div>
     </AppLayout>
+
+    <DialogModal :show="confirmingRegistrationDeletion" @close="closeModal">
+        <template #title> Supprimer l'inscription </template>
+
+        <template #content>
+            Êtes-vous sûr de vouloir supprimer cette inscription? Cette action est
+            irréversible.
+        </template>
+
+        <template #footer>
+            <SecondaryButton @click="closeModal"> Annuler </SecondaryButton>
+
+            <DangerButton
+                class="ms-3"
+                :class="{ 'opacity-25': confirmingRegistrationDeletion.processing }"
+                :disabled="confirmingRegistrationDeletion.processing"
+                @click="deleteRegistration"
+            >
+                Supprimer
+            </DangerButton>
+        </template>
+    </DialogModal>
 </template>

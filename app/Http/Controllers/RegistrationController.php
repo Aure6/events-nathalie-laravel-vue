@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRegistrationRequest;
 use App\Models\Event;
 use App\Models\Registration;
-use DateTime;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -91,10 +90,15 @@ class RegistrationController extends Controller
      */
     public function destroy(Registration $registration)
     {
-        $registration->delete();
+        $message = "L'inscription de " . $registration->name . " a bien été supprimée.";
 
-        // On affiche un message flash (notification toast) pour confirmer la suppression de la tâche.
-        session()->flash('flash.banner', "L'inscription a bien été supprimée.");
+        Registration::findOrFail($registration->id)->delete();
+
+        // $registration->delete();
+
+        // session()->flash('flash.banner', "L'inscription a bien été annulée.");
+
+        session()->flash('flash.banner', $message);
 
         return redirect()->back();
     }
