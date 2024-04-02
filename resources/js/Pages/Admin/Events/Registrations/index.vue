@@ -12,7 +12,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia";
 import { useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps(["registrations", "event"]);
 
@@ -26,6 +26,10 @@ const deleteRegistration = (registrationId) => {
         },
     });
 };
+console.log(props.registrations.length);
+const IsRegistrationEmpty = computed(() => {
+    return props.registrations.length === 0 ? true : false;
+});
 </script>
 
 <template>
@@ -69,6 +73,7 @@ const deleteRegistration = (registrationId) => {
                         </tr>
                     </thead>
                     <tbody>
+                        <div v-if="IsRegistrationEmpty">Aucune inscription trouvée.</div>
                         <tr v-for="registration in registrations" :key="registration.id"
                             class="border hover:bg-sky-200">
                             <td>{{ registration.date }}</td>

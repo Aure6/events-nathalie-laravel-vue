@@ -10,7 +10,7 @@ class Registration extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'company_name', 'email',  'phone'];
+    protected $fillable = ['name', 'company_name', 'email',  'phone', 'event_id'];
 
     public function event(): BelongsTo
     {
