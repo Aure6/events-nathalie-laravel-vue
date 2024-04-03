@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('body')->nullable();
             $table->string('start')->nullable();
             $table->string('end')->nullable();
+            $table->string('registrations_limit')->nullable();
             $table->string('img_path')->nullable();
 
             // $table->foreignId('organizer_id')->constrained()->onDelete('cascade')->nullable();
