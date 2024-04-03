@@ -32,6 +32,16 @@ const formUpdateEvent = usePrecognitionForm("patch", route("admin.events.update"
 formUpdateEvent.setValidationTimeout(300);
 
 const updateEvent = () => {
+    if (typeof isLimitChecked.value === 'undefined') {
+        throw new Error('isLimitChecked is undefined');
+        // props.event.registrations_limit = null;
+    }
+    if (isLimitChecked.value === true) {
+
+    } else {
+        props.event.registrations_limit = null;
+    };
+
     formUpdateEvent.submit({
         preserveScroll: true,
         onSuccess: () => {
@@ -39,6 +49,15 @@ const updateEvent = () => {
         },
     });
 };
+
+// const isLimitChecked = ref(false);
+if (props.event.registrations_limit === null) {
+    const isLimitChecked = ref(false);
+} else {
+    // isLimitChecked.value = true;
+    const isLimitChecked = ref(true);
+};
+
 </script>
 
 <template>
@@ -83,7 +102,7 @@ const updateEvent = () => {
                         @input="formUpdateEvent.validate('name')" />
                     <InputError :message="formUpdateEvent.errors.name" class="mt-2" />
                 </div>
-                <div class="mt-2 space-y-4">
+                <div class="mt-5 space-y-5">
                     <div class="grid grid-cols-2">
                         <!-- start -->
                         <div class="">
@@ -125,9 +144,9 @@ const updateEvent = () => {
                     <!-- Limiter les inscriptions -->
                     <div class="space-x-2">
                         <InputLabel for="limit" value="Limiter les inscriptions" class="inline-block" />
-                        <input type="checkbox" id="limit" name="limit" />
-                        <span>
-                            au
+                        <input type="checkbox" id="limit" name="limit" v-model="isLimitChecked" />
+                        <span v-if="isLimitChecked">
+                            jusqu'à
                             <TextInput id="registrations_limit" v-model="formUpdateEvent.registrations_limit"
                                 type="number" class="inline-block w-32 p-0"
                                 @input="formUpdateEvent.validate('registrations_limit')" />
@@ -138,14 +157,14 @@ const updateEvent = () => {
                     <!-- TODO statut de l'event brouillon, RSVP, annoncé avec tag radio -->
                 </div>
                 <!-- description -->
-                <div class="mt-2">
+                <div class="mt-5">
                     <InputLabel for="description" value="Brève description affiché dans la liste des évènements" />
                     <textarea id="description" v-model="formUpdateEvent.description" type="text"
                         class="block w-full mt-1" @input="formUpdateEvent.validate('description')" />
                     <InputError :message="formUpdateEvent.errors.description" class="mt-2" />
                 </div>
                 <!-- body -->
-                <div class="mt-2">
+                <div class="mt-5">
                     <InputLabel for="body" value="Corps de texte de la page de l'événement" />
                     <textarea id="body" v-model="formUpdateEvent.body" rows="10" class="block w-full mt-1"
                         @input="formUpdateEvent.validate('body')" />
