@@ -22,7 +22,27 @@ class EventFactory extends Factory
         $end = $start ? $this->faker->dateTimeBetween($start, '+52 week') : null;
 
         return [
-            'name' => $this->faker->bs(),
+            // 'name' => $this->faker->bs(),
+            'name' => $this->faker->randomElement([
+                'Danse-thérapie',
+                'Art-thérapie',
+                'Prendre la parole en public',
+                'Les bases de la PNL',
+                'Définir ses objectifs de vie',
+                'Gérer les conflits',
+                'Gérer ses émotions',
+                'Gérer son temps et ses priorités',
+                'Communication assertive',
+                'Les bases du développement personnel',
+                'Gérer son stress',
+                'Sophrologie',
+                'Yoga',
+                'Méditation',
+                'Pleine conscience',
+                'Routines bien-être',
+                'Relaxation',
+            ]),
+
             'description' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 200),
             'body' => $this->faker->realTextBetween($minNbChars = 160, $maxNbChars = 2000),
 
@@ -40,6 +60,7 @@ class EventFactory extends Factory
             //     return str_replace(storage_path('app/public/'), '', $absolutePath);
             // },
 
+            // 'organizer_id' => Contact::where('contactable_type', '=', 'App\Models\Individual')->get()->random()->id,
             'organizer_id' => Contact::get()->random()->id,
             // 'organizer_id' => Organizer::get()->random()->id,
 

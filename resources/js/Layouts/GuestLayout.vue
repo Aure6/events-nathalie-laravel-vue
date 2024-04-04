@@ -49,7 +49,7 @@ function handleImageError() {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex items-center shrink-0">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('events.index')">
                                 <ApplicationMark class="block w-auto h-9" />
                                 </Link>
                             </div>

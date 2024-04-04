@@ -7,6 +7,7 @@ use App\Http\Requests\StoreEventRequest;
 use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Organizer;
+use App\Models\Registration;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -34,9 +35,22 @@ class EventController extends Controller
         //     $event->month_start = $event->start->format('F');
         // });
 
-        // Add the month as a property of each event
+        // // Add the month as a property of each event
+        // $events->each(function ($event) {
+        //     $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
+        // });
+
         $events->each(function ($event) {
             $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
+
+            $registrations_number = Registration::where('event_id', '=', $event->id)->count();
+            $event->registrations_number = $registrations_number;
+
+            $place = Contact::with('contactable')->where('id', '=', $event->place_id)->firstOrFail();
+            $organizer = Contact::with('contactable')->where('id', '=', $event->organizer_id)->firstOrFail();
+
+            $event->place = $place;
+            $event->organizer = $organizer;
         });
 
         return Inertia::render('Admin/Events/index', [

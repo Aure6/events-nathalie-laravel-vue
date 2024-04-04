@@ -7,7 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia";
 
-const props = defineProps(["event"]);
+const props = defineProps(["event", "registrations_number"]);
 
 const formCreateRegistration = usePrecognitionForm("post", route("registrations.store", { event: props.event.id }), {
     name: "",
@@ -33,10 +33,10 @@ const CreateRegistration = () => {
 </script>
 
 <template>
-    <GuestLayout title="Formations">
+    <GuestLayout :title="event.name">
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Formations
+                {{ event.name }}
             </h2>
         </template>
 
@@ -48,7 +48,7 @@ const CreateRegistration = () => {
                             <img v-if="event.img_path" class="mx-auto sm:rounded-t-xl"
                                 :src="'/storage/images/' + event.img_path" />
                             <img v-else class="mx-auto sm:rounded-t-xl" src="/storage/images/event_placeholder.jpg" />
-                            <div class="max-w-4xl mx-auto">
+                            <div class="max-w-4xl mx-auto space-y-4">
                                 <h3 class="mb-2 text-xl">
                                     {{ event.name }}
                                 </h3>
@@ -57,6 +57,16 @@ const CreateRegistration = () => {
                             </div>
                         </div>
                         <div class="space-y-4">
+                            <div>
+                                <span v-if="registrations_limit">
+                                    {{ registrations_number }} participant(s) inscrit(s) sur les {{
+        event.registrations_limit }} places disponibles
+                                </span>
+                                <span v-else>
+                                    {{ registrations_number }} participant(s) inscrit(s). Il n'y a pas de limite de
+                                    participants.
+                                </span>
+                            </div>
                             <div class="">
                                 <div class="flex flex-row items-center gap-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -69,13 +79,16 @@ const CreateRegistration = () => {
                                     </svg>
                                     <span class="text-gray-600">Date</span>
                                 </div>
-                                <div>
-                                    {{ event.start.substring(0, 16) }}
+                                <div v-if="event.start && event.end">
+                                    <!-- {{ event.start.substring(0, 16) }} --> {{ event.start }}
                                     ->
-                                    {{ event.end.substring(0, 16) }}
+                                    <!-- {{ event.end.substring(0, 16) }} --> {{ event.end }}
                                 </div>
+                                <div v-else>Date pas encore annoncée</div>
                             </div>
-                            <div class=""> {{ event.start.substring(5, 7) }} {{ event.month_start }}</div>
+                            <div v-if="event.start && event.end" class="">
+                                {{ event.start.substring(5, 7) }} <!-- {{ event.start }}  -->{{ event.month_start }}
+                            </div>
                             <div class="">
                                 <div class="flex flex-row items-center gap-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
