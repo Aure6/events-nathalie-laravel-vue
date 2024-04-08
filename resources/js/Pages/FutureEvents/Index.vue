@@ -23,7 +23,7 @@ const props = defineProps(["events"]);
                         prévenu. <!-- 😀 -->
                     </div>
                     <ul class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-                        <Link :href="route('events.show', { id: event.id })" v-for="event in events" :key="event.id"
+                        <Link :href="route('future.show', { id: event.id })" v-for="event in events" :key="event.id"
                             class="transition bg-white sm:rounded-xl hover:bg-green-100">
                         <!-- stored in storage/app/public/images -->
                         <img v-if="event.img_path" class="sm:rounded-t-xl" :src="'/storage/images/' + event.img_path" />
