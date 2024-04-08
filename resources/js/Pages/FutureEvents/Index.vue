@@ -6,16 +6,22 @@ const props = defineProps(["events"]);
 </script>
 
 <template>
-    <GuestLayout title="Formations">
+    <GuestLayout title="Futures formations">
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                Formations
+                Futures formations
             </h2>
         </template>
 
         <div class="py-12">
+
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden sm:p-6 sm:rounded-lg">
+                <div class="space-y-6 overflow-hidden sm:p-6 sm:rounded-xl">
+                    <div class="p-6 text-white rounded-xl">
+                        Pour être prévenu de la date lorsqu'une formation future est fixée, choisissez la formation qui
+                        vous intéresse et vous pourrez remplir un formulaire avec votre adresse e-mail afin d'être
+                        prévenu. <!-- 😀 -->
+                    </div>
                     <ul class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
                         <Link :href="route('events.show', { id: event.id })" v-for="event in events" :key="event.id"
                             class="transition bg-white sm:rounded-xl hover:bg-green-100">
@@ -28,7 +34,7 @@ const props = defineProps(["events"]);
                             </h3>
                             <div class="mb-2 text-gray-600"> {{ event.description }}</div>
                             <div v-if="event.start && event.end" class="mb-2">
-                                {{ event.start.substring(5, 7) }} {{ event.month_start }} {{ event.start_year }}
+                                {{ event.start.substring(5, 7) }} {{ event.month_start }}
                             </div>
                             <!-- <div class="text-gray-600"> {{ event.start.substring(0, 16) }} -> {{ event.end.substring(0,
                                 16) }}</div> -->

@@ -9,26 +9,14 @@ use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class EventController extends Controller
+class FutureEventController extends Controller
 {
     public function index()
     {
-        // $events = Event::latest()->get();
-        $events = Event::where('start', '!=', null)->oldest('start')->get();
+        $events = Event::where('start', '=', null)->oldest()->get();
 
-        // // Add the month as a property of each event
-        // $events->each(function ($event) {
-        //     $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
-        // });
-
-        // $place = Contact::with('contactable')->where('id', '=', $event->place_id)->firstOrFail();
-        // $organizer = Contact::with('contactable')->where('id', '=', $event->organizer_id)->firstOrFail();
-
-        // $event->place = $place;
-        // $event->organizer = $organizer;
-
-        // Add the month start name, [...] as a property of each event
         $events->each(function ($event) {
+            // not used because the date is null for a future event
             $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
             $event->start_year = \Carbon\Carbon::parse($event->start)->format('Y');
 
@@ -39,7 +27,7 @@ class EventController extends Controller
             $event->organizer = $organizer;
         });
 
-        return Inertia::render('Events/Index', [
+        return Inertia::render('FutureEvents/Index', [
             'events' => $events,
         ]);
     }
@@ -53,19 +41,15 @@ class EventController extends Controller
         $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
 
         $place = Contact::with('contactable')->where('id', '=', $event->place_id)->firstOrFail();
-        // $place_name = $place->contactable->name;
-        // $event->place_name = $place_name;
 
         $organizer = Contact::with('contactable')->where('id', '=', $event->organizer_id)->firstOrFail();
-        // $organizer_name = $organizer->contactable->name;
-        // $event->organizer_name = $organizer_name;
 
         $event->place = $place;
         $event->organizer = $organizer;
 
         // $event->place_name =
 
-        return Inertia::render('Events/Show', [
+        return Inertia::render('FutureEvents/Show', [
             'event' => $event,
             'registrations_number' => $registrations_number,
         ]);

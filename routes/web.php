@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 // autres imports ...
+use App\Http\Controllers\FutureEventController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RegistrationController;
@@ -33,7 +34,8 @@ Route::middleware([
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.show');
 
-// Route::get('/admin/events', [EventController::class, 'show'])->name('admin.events');
+Route::get('/future_events', [FutureEventController::class, 'index'])->name('future.index');
+Route::get('/future_events/{id}/show', [EventController::class, 'show'])->name('future.show');
 
 Route::middleware(HandlePrecognitiveRequests::class)->group(function () {
     // Route::post('/events/{event}/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');

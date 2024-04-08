@@ -59,6 +59,9 @@ function handleImageError() {
                                 <NavLink :href="route('events.index')" :active="route().current('events.index')">
                                     Formations
                                 </NavLink>
+                                <NavLink :href="route('future.index')" :active="route().current('future.index')">
+                                    Futures formations
+                                </NavLink>
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Admin
                                 </NavLink>
