@@ -14,7 +14,6 @@ const props = defineProps(["events"]);
         </template>
 
         <div class="py-12">
-
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="space-y-6 overflow-hidden sm:p-6 sm:rounded-xl">
                     <div class="p-6 text-white rounded-xl">
@@ -47,6 +46,7 @@ const props = defineProps(["events"]);
                                 </svg>
                                 <div>{{ event.place.contactable.name }}</div>
                             </div>
+                            {{ registrations_number }} participant(s) inscrit(s).
                         </div>
                         </Link>
                     </ul>

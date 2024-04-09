@@ -31,16 +31,30 @@ const formUpdateEvent = usePrecognitionForm("patch", route("admin.events.update"
 
 formUpdateEvent.setValidationTimeout(300);
 
-const updateEvent = () => {
-    if (typeof isLimitChecked.value === 'undefined') {
-        throw new Error('isLimitChecked is undefined');
-        // props.event.registrations_limit = null;
-    }
-    if (isLimitChecked.value === true) {
+// if (props.event.registrations_limit === null) {
+//     const isLimitChecked = ref(false);
+//     console.log(isLimitChecked.value);
+//     console.log(isLimitChecked);
+// } else {
+//     // isLimitChecked.value = true;
+//     const isLimitChecked = ref(true);
+//     console.log(isLimitChecked.value);
+//     console.log(isLimitChecked);
+// };
 
-    } else {
-        props.event.registrations_limit = null;
-    };
+const updateEvent = () => {
+    // console.log(isLimitChecked.value);
+    // console.log(isLimitChecked);
+    // if (typeof isLimitChecked.value === 'undefined') {
+    //     throw new Error('isLimitChecked is undefined. Typeof is ' + typeof isLimitChecked.value);
+    //     // props.event.registrations_limit = null;
+    //     throw new Error(typeof isLimitChecked.value);
+    // }
+    // if (isLimitChecked.value === true) {
+
+    // } else {
+    //     props.event.registrations_limit = null;
+    // };
 
     formUpdateEvent.submit({
         preserveScroll: true,
@@ -48,14 +62,6 @@ const updateEvent = () => {
             //
         },
     });
-};
-
-// const isLimitChecked = ref(false);
-if (props.event.registrations_limit === null) {
-    const isLimitChecked = ref(false);
-} else {
-    // isLimitChecked.value = true;
-    const isLimitChecked = ref(true);
 };
 
 </script>
@@ -73,6 +79,7 @@ if (props.event.registrations_limit === null) {
                         Événements
                     </h2>
                     </Link>
+                    > ID: {{ event.id }}
                 </div>
                 <div class="inline-block mx-auto ">
                     <SecondaryLink :href="route('registrations.index', event.id)">
@@ -86,7 +93,7 @@ if (props.event.registrations_limit === null) {
         <div class="py-2 mx-auto bg-white border-t-2 max-w-7xl sm:px-6 lg:px-8">
             <form @submit.prevent="updateEvent">
                 <div class="flex justify-center">
-                    <ActionMessage :on="formUpdateEvent.recentlySuccessful" class="me-3">
+                    <ActionMessage :on="formUpdateEvent.recentlySuccessful" class="text-green-500 me-3">
                         Sauvegardé.
                     </ActionMessage>
 
@@ -103,46 +110,52 @@ if (props.event.registrations_limit === null) {
                     <InputError :message="formUpdateEvent.errors.name" class="mt-2" />
                 </div>
                 <div class="mt-5 space-y-5">
-                    <div class="grid grid-cols-2">
-                        <!-- start -->
-                        <div class="">
-                            <InputLabel for="start" value="Début" />
-                            <TextInput id="start" v-model="formUpdateEvent.start" type="datetime-local"
-                                class="block w-full mt-1" @input="formUpdateEvent.validate('start')" />
-                            <InputError :message="formUpdateEvent.errors.start" class="mt-2" />
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="grid grid-cols-2 gap-1">
+                            <!-- start -->
+                            <div class="">
+                                <InputLabel for="start" value="Début" />
+                                <TextInput id="start" v-model="formUpdateEvent.start" type="datetime-local"
+                                    class="block w-full mt-1" @input="formUpdateEvent.validate('start')" />
+                                <InputError :message="formUpdateEvent.errors.start" class="mt-2" />
+                            </div>
+                            <!-- end -->
+                            <div class="">
+                                <InputLabel for="end" value="Fin" />
+                                <TextInput id="end" v-model="formUpdateEvent.end" type="datetime-local"
+                                    class="block w-full mt-1" @input="formUpdateEvent.validate('end')" />
+                                <InputError :message="formUpdateEvent.errors.end" class="mt-2" />
+                            </div>
                         </div>
-                        <!-- end -->
-                        <div class="">
-                            <InputLabel for="end" value="Fin" />
-                            <TextInput id="end" v-model="formUpdateEvent.end" type="datetime-local"
-                                class="block w-full mt-1" @input="formUpdateEvent.validate('end')" />
-                            <InputError :message="formUpdateEvent.errors.end" class="mt-2" />
+                        <div>
+                            <!-- place_id -->
+                            <div class="">
+                                <InputLabel for="organizer_id" value="Lieu" />
+                                <select id="organizer_id" v-model="formUpdateEvent.place_id"
+                                    class="block w-full mt-1 border-0" @input="formUpdateEvent.validate('place_id')">
+                                    <option v-for="contact in contacts" :key="contact.id" :value="contact.id">
+                                        {{ contact.contactable.name }}
+                                    </option>
+                                </select>
+                                <InputError :message="formUpdateEvent.errors.place_id" class="mt-2" />
+                            </div>
+                            <!-- organizer_id -->
+                            <div class="">
+                                <InputLabel for="organizer_id" value="Organisateur" />
+                                <select id="organizer_id" v-model="formUpdateEvent.organizer_id"
+                                    class="block w-full mt-1 border-0"
+                                    @input="formUpdateEvent.validate('organizer_id')">
+                                    <option v-for="contact in contacts" :key="contact.id" :value="contact.id">
+                                        {{ contact.contactable.name }}
+                                    </option>
+                                </select>
+                                <InputError :message="formUpdateEvent.errors.organizer_id" class="mt-2" />
+                            </div>
                         </div>
                     </div>
-                    <!-- place_id -->
-                    <div class="">
-                        <InputLabel for="organizer_id" value="Lieu" />
-                        <select id="organizer_id" v-model="formUpdateEvent.place_id" class="block mt-1 border-0"
-                            @input="formUpdateEvent.validate('place_id')">
-                            <option v-for="contact in contacts" :key="contact.id" :value="contact.id">
-                                {{ contact.contactable.name }}
-                            </option>
-                        </select>
-                        <InputError :message="formUpdateEvent.errors.place_id" class="mt-2" />
-                    </div>
-                    <!-- organizer_id -->
-                    <div class="">
-                        <InputLabel for="organizer_id" value="Organisateur" />
-                        <select id="organizer_id" v-model="formUpdateEvent.organizer_id" class="block mt-1 border-0"
-                            @input="formUpdateEvent.validate('organizer_id')">
-                            <option v-for="contact in contacts" :key="contact.id" :value="contact.id">
-                                {{ contact.contactable.name }}
-                            </option>
-                        </select>
-                        <InputError :message="formUpdateEvent.errors.organizer_id" class="mt-2" />
-                    </div>
+
                     <!-- Limiter les inscriptions -->
-                    <div class="space-x-2">
+                    <!-- <div class="space-x-2">
                         <InputLabel for="limit" value="Limiter les inscriptions" class="inline-block" />
                         <input type="checkbox" id="limit" name="limit" v-model="isLimitChecked" />
                         <span v-if="isLimitChecked">
@@ -153,18 +166,34 @@ if (props.event.registrations_limit === null) {
                             participants
                             <InputError :message="formUpdateEvent.errors.registrations_limit" class="mt-2" />
                         </span>
-                    </div>
+                    </div> -->
                     <!-- TODO statut de l'event brouillon, RSVP, annoncé avec tag radio -->
+                    <div class="mx-auto w-fit">
+                        <h3>Tickets</h3>
+                        <table>
+                            <thead>
+                                <tr class="border border-gray-200">
+                                    <th class="p-2">Nom</th>
+                                    <th class="p-2">Prix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border border-gray-200 hover:bg-gray-200 even:bg-gray-100 odd:bg-white">A
+                                </tr>
+                                <tr class="border border-gray-200 even:bg-gray-100 odd:bg-white">B</tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- description -->
-                <div class="mt-5">
+                <div class="max-w-4xl mx-auto mt-5">
                     <InputLabel for="description" value="Brève description affiché dans la liste des évènements" />
                     <textarea id="description" v-model="formUpdateEvent.description" type="text"
                         class="block w-full mt-1" @input="formUpdateEvent.validate('description')" />
                     <InputError :message="formUpdateEvent.errors.description" class="mt-2" />
                 </div>
                 <!-- body -->
-                <div class="mt-5">
+                <div class="max-w-4xl mx-auto mt-5">
                     <InputLabel for="body" value="Corps de texte de la page de l'événement" />
                     <textarea id="body" v-model="formUpdateEvent.body" rows="10" class="block w-full mt-1"
                         @input="formUpdateEvent.validate('body')" />
