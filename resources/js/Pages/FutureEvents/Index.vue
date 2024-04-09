@@ -27,12 +27,12 @@ const props = defineProps(["events"]);
                         <!-- stored in storage/app/public/images -->
                         <img v-if="event.img_path" class="sm:rounded-t-xl" :src="'/storage/images/' + event.img_path" />
                         <img v-else class="sm:rounded-t-xl" src="/storage/images/event_placeholder.jpg" />
-                        <div class="p-6">
-                            <h3 class="mb-2 text-xl">
+                        <div class="p-6 space-y-2">
+                            <h3 class="text-xl">
                                 {{ event.name }}
                             </h3>
-                            <div class="mb-2 text-gray-600"> {{ event.description }}</div>
-                            <div v-if="event.start && event.end" class="mb-2">
+                            <div class="text-gray-600"> {{ event.description }}</div>
+                            <div v-if="event.start && event.end" class="">
                                 {{ event.start.substring(5, 7) }} {{ event.month_start }}
                             </div>
                             <!-- <div class="text-gray-600"> {{ event.start.substring(0, 16) }} -> {{ event.end.substring(0,
@@ -46,7 +46,12 @@ const props = defineProps(["events"]);
                                 </svg>
                                 <div>{{ event.place.contactable.name }}</div>
                             </div>
-                            {{ registrations_number }} participant(s) inscrit(s).
+                            <div v-if="event.registrations_sum === 1">{{ event.registrations_sum }} participant
+                                inscrit
+                            </div>
+                            <div v-else>{{ event.registrations_sum }} participants
+                                inscrits
+                            </div>
                         </div>
                         </Link>
                     </ul>

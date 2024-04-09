@@ -48,7 +48,7 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
 
-        $registrations_number = Registration::where('event_id', '=', $event->id)->count();
+        $event->registrations_sum = Registration::where('event_id', '=', $event->id)->count();
 
         $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
 
@@ -67,7 +67,6 @@ class EventController extends Controller
 
         return Inertia::render('Events/Show', [
             'event' => $event,
-            'registrations_number' => $registrations_number,
         ]);
     }
 }

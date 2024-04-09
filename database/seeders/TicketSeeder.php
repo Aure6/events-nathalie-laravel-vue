@@ -19,19 +19,19 @@ class TicketSeeder extends Seeder
         foreach ($events as $event) {
             Ticket::create([
                 'name' => 'Particulier',
-                'price' => 10,
+                'price' => 10.00,
                 'event_id' => $event->id,
             ]);
 
             Ticket::create([
                 'name' => 'Entreprise de moins de 10 personnes',
-                'price' => 15,
+                'price' => 15.00,
                 'event_id' => $event->id,
             ]);
 
             Ticket::create([
                 'name' => 'Entreprise de plus de 10 personnes',
-                'price' => 25,
+                'price' => 25.00,
                 'event_id' => $event->id,
             ]);
         }

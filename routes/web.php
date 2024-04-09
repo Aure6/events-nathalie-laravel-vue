@@ -10,6 +10,7 @@ use App\Http\Controllers\FutureEventController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::get('/', function () {
@@ -53,6 +54,9 @@ Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () 
     Route::get('/admin/events/{event}/edit', [AdminEventController::class, 'edit'])->name('admin.events.edit');
     Route::patch('/admin/events/{event}/update', [AdminEventController::class, 'update'])->name('admin.events.update');
     Route::delete('/admin/events/delete', [AdminEventController::class, 'delete'])->name('admin.events.delete');
+
+    Route::post('/admin/tickets/store', [TicketController::class, 'store'])->name('tickets.store');
+    Route::delete('/admin/tickets/{ticket}/destroy', [TicketController::class, 'destroy'])->name('tickets.destroy');
 
     Route::get('/events/{event}/registrations', [RegistrationController::class, 'index'])->name('registrations.index');
     // Route::delete('/events/{event}/registrations/{registration}/delete', [RegistrationController::class, 'destroy'])->name('registrations.destroy');

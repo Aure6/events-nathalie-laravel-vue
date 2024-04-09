@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Organizer;
 use App\Models\Registration;
+use App\Models\Ticket;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -119,6 +120,8 @@ class EventController extends Controller
 
         $organizers = Organizer::orderBy('last_name', 'desc')->get();
         $contacts = Contact::with('contactable')->latest()->get();
+
+        $event->tickets = Ticket::where('event_id', '=', $event->id)->oldest()->get();
 
         return Inertia::render('Admin/Events/edit', [
             'event' => $event,

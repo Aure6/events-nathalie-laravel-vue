@@ -58,13 +58,19 @@ const CreateRegistration = () => {
                         </div>
                         <div class="space-y-4">
                             <div>
-                                <span v-if="registrations_limit">
+                                <!-- <span v-if="registrations_limit">
                                     {{ registrations_number }} participant(s) inscrit(s) sur les {{
         event.registrations_limit }} places disponibles
                                 </span>
                                 <span v-else>
                                     {{ registrations_number }} participant(s) inscrit(s). Il n'y a pas de limite de
                                     participants.
+                                </span> -->
+                                <span v-if="event.registrations_sum === 1">{{ event.registrations_sum }} participant
+                                    inscrit
+                                </span>
+                                <span v-else>{{ event.registrations_sum }} participants
+                                    inscrits
                                 </span>
                             </div>
                             <div class="">

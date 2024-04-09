@@ -43,7 +43,7 @@ const IsRegistrationEmpty = computed(() => {
 });
 </script>
 
-<template >
+<template>
     <AppLayout title="Inscriptions">
         <template #header>
             <!-- <PrimaryButton @click="confirmCreateEvent" type="button">
@@ -84,12 +84,15 @@ const IsRegistrationEmpty = computed(() => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="IsRegistrationEmpty" class="mx-auto text-center h-96"><td colspan="10" class="space-y-4">
-                            <div class="text-2xl">Aucune inscription trouvée.</div>
-                            <div class="text-lg text-gray-700">Attendez que les participants s'inscrivent à votre événement. <!-- ou créez leurs inscriptions manuellement. --></div>
-                        </td></tr>
+                        <tr v-if="IsRegistrationEmpty" class="mx-auto text-center h-96">
+                            <td colspan="10" class="space-y-4">
+                                <div class="text-2xl">Aucune inscription trouvée.</div>
+                                <div class="text-lg text-gray-700">Attendez que les participants s'inscrivent à votre
+                                    événement. <!-- ou créez leurs inscriptions manuellement. --></div>
+                            </td>
+                        </tr>
                         <tr v-for="registration in registrations" :key="registration.id"
-                            class="border hover:bg-sky-200">
+                            class="border hover:bg-gray-200 even:bg-gray-100 odd:bg-white">
                             <td>{{ registration.date }}</td>
                             <td>{{ registration.name }}</td>
                             <td>{{ registration.email }}</td>
@@ -122,12 +125,8 @@ const IsRegistrationEmpty = computed(() => {
         <template #footer>
             <SecondaryButton @click="closeModal"> Annuler </SecondaryButton>
 
-            <DangerButton
-                class="ms-3"
-                :class="{ 'opacity-25': confirmingRegistrationDeletion.processing }"
-                :disabled="confirmingRegistrationDeletion.processing"
-                @click="deleteRegistration"
-            >
+            <DangerButton class="ms-3" :class="{ 'opacity-25': confirmingRegistrationDeletion.processing }"
+                :disabled="confirmingRegistrationDeletion.processing" @click="deleteRegistration">
                 Supprimer
             </DangerButton>
         </template>

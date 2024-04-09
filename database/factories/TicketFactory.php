@@ -19,9 +19,9 @@ class TicketFactory extends Factory
     {
         return [
             // TO CHANGE
-            'name' => $this->faker->name(),
-            'price' => $this->faker->numberBetween(0, 100),
-            'event_id' => Event::get()->random()->id,
+            // 'name' => $this->faker->name(),
+            // 'price' => $this->faker->numberBetween(0, 100),
+            // 'event_id' => Event::get()->random()->id,
         ];
     }
 }
