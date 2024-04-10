@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\FutureEventController;
 use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
@@ -37,6 +38,9 @@ Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.
 
 Route::get('/future_events', [FutureEventController::class, 'index'])->name('future.index');
 Route::get('/future_events/{id}/show', [FutureEventController::class, 'show'])->name('future.show');
+
+Route::get('/payment/{string}/{price}', [PaymentController::class, 'charge'])->name('goToPayment');
+Route::post('payment/process-payment/{string}/{price}', [PaymentController::class, 'processPayment'])->name('processPayment');
 
 Route::middleware(HandlePrecognitiveRequests::class)->group(function () {
     // Route::post('/events/{event}/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
