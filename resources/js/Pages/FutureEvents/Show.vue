@@ -138,7 +138,7 @@ const CreateRegistration = () => {
                         </div>
                     </div>
                     <form @submit.prevent="CreateRegistration" class="max-w-2xl py-6 mx-auto space-y-4 sm:px-6 lg:px-8">
-                        <h3 class="text-xl">Inscrivez-vous!</h3>
+                        <h3 class="text-xl">Veuillez remplir ce formulaire afin d'être prévenu</h3>
                         <!-- <TextInput id="event_id" v-model="formCreateRegistration.event_id" type="hidden"
                             @input="formCreateRegistration.validate('event_id')" /> -->
                         <!-- name -->

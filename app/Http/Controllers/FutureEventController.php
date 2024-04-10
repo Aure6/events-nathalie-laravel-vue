@@ -38,7 +38,6 @@ class FutureEventController extends Controller
     {
         $event = Event::findOrFail($id);
 
-        // $registrations_number = Registration::where('event_id', '=', $event->id)->count();
         $event->registrations_sum = Registration::where('event_id', '=', $event->id)->count();
 
         $event->month_start = \Carbon\Carbon::parse($event->start)->format('F');
@@ -49,8 +48,6 @@ class FutureEventController extends Controller
 
         $event->place = $place;
         $event->organizer = $organizer;
-
-        // $event->place_name =
 
         return Inertia::render('FutureEvents/Show', [
             'event' => $event,

@@ -36,7 +36,7 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.show');
 
 Route::get('/future_events', [FutureEventController::class, 'index'])->name('future.index');
-Route::get('/future_events/{id}/show', [EventController::class, 'show'])->name('future.show');
+Route::get('/future_events/{id}/show', [FutureEventController::class, 'show'])->name('future.show');
 
 Route::middleware(HandlePrecognitiveRequests::class)->group(function () {
     // Route::post('/events/{event}/registrations/store', [RegistrationController::class, 'store'])->name('registrations.store');
