@@ -13,7 +13,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia";
 import { useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const props = defineProps(["event", "contacts"]);
 
@@ -64,7 +64,8 @@ const updateEvent = () => {
     });
 };
 
-// Tickets store
+
+// Ticket
 const formCreateTicket = usePrecognitionForm("post", route("tickets.store"), {
     name: "",
     price: "",
@@ -73,42 +74,66 @@ const formCreateTicket = usePrecognitionForm("post", route("tickets.store"), {
 
 formCreateTicket.setValidationTimeout(300);
 
+const confirmingTicketCreation = ref(false);
+
 const createTicket = () => {
     formCreateTicket.submit({
         preserveScroll: true,
         onSuccess: () => {
             formCreateTicket.name = "";
             formCreateTicket.price = "";
+            confirmTicketCreation.value = false;
         },
     });
 };
 
-const confirmingTicketCreation = ref(false);
-
-const confirmTicketCreation = (id) => {
+const confirmTicketCreation = () => {
     confirmingTicketCreation.value = true;
 };
 
-const closeModal = () => {
-    confirmingTicketCreation.value = false;
-};
 
-// Tickets destroy
-// const confirmingRegistrationDeletion = ref(false);
+
+// const confirmingTicketUpdating = ref(false);
+// const ticketIdToUpdate = ref(null);
+
+// const formUpdateTicket = usePrecognitionForm("put", route("tickets.update", { ticket: ticketIdToUpdate.value, }), {
+//     name: props.event.[ticketIdToUpdate.value].name,
+//     price: '',
+// });
+
+// const confirmTicketUpdating = (id) => {
+//     ticketIdToUpdate.value = id;
+//     confirmingTicketUpdating.value = true;
+// };
+
+// const updateTicket = () => formUpdateTicket.submit({
+//     preserveScroll: true,
+//     onSuccess: () => formUpdateTicket.reset(),
+// });
+
+
+
+const confirmingTicketDeletion = ref(false);
 const ticketIdToDelete = ref(null);
 const formDeleteTicket = useForm("delete", {});
 const confirmTicketDeletion = (id) => {
     ticketIdToDelete.value = id;
-    // confirmingRegistrationDeletion.value = true;
+    confirmingTicketDeletion.value = true;
     deleteTicket();
 };
 const deleteTicket = () => {
     formDeleteTicket.delete(route("tickets.destroy", { ticket: ticketIdToDelete.value }), {
         preserveScroll: true,
         onSuccess: () => {
-            // confirmingRegistrationDeletion.value = false;
+            confirmingTicketDeletion.value = false;
         },
     });
+};
+
+const closeModal = () => {
+    confirmingTicketCreation.value = false;
+    // confirmingTicketUpdating.value = false;
+    confirmingTicketDeletion.value = false;
 };
 </script>
 
@@ -140,7 +165,7 @@ const deleteTicket = () => {
             <form @submit.prevent="updateEvent">
                 <div class="flex justify-center">
                     <ActionMessage :on="formUpdateEvent.recentlySuccessful" class="text-green-500 me-3">
-                        Sauvegardé.
+                        Événement sauvegardé.
                     </ActionMessage>
 
                     <PrimaryButton :class="{ 'opacity-25': formUpdateEvent.processing }"
@@ -213,23 +238,32 @@ const deleteTicket = () => {
                             <InputError :message="formUpdateEvent.errors.registrations_limit" class="mt-2" />
                         </span>
                     </div> -->
-                    <!-- TODO statut de l'event brouillon, RSVP, annoncé avec tag radio -->
+                    <!-- TODO statut de l'event brouillon, RSVP, annoncé avec tag radio. Pour le moment on vérifié la date start pour déterminer si un event est dans les futurs formations -->
                     <div class="mx-auto w-fit">
                         <h3 class="block text-sm font-medium text-gray-700">Tickets</h3>
                         <table>
                             <thead>
                                 <tr class="text-left border">
-                                    <th class="p-2 px-2">Nom</th>
+                                    <th class="p-2 px-2 pl-4">Nom</th>
                                     <th class="p-2 px-2 text-right">Prix</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="ticket in event.tickets" :key="ticket.id"
                                     class="border hover:bg-gray-200 even:bg-gray-100 odd:bg-white">
-                                    <td class="px-2">{{ ticket.name }}</td>
-                                    <td>{{ ticket.price }} €</td>
+                                    <td class="pl-4 pr-3">{{ ticket.name }}</td>
+                                    <td class="">{{ ticket.price }} €</td>
                                     <td class=""><a
-                                            class="inline-block px-2 transition-all rounded cursor-pointer hover:ring-red-500 hover:ring-2 hover:text-white hover:bg-red-500"
+                                            class="inline-block px-2 text-yellow-500 transition-all rounded cursor-pointer hover:ring-yellow-500 hover:ring-2 hover:text-white hover:bg-yellow-500"
+                                            @click="confirmTicketUpdating(ticket.id)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                            </svg>
+                                        </a></td>
+                                    <td class="pr-4"><a
+                                            class="inline-block px-2 text-red-500 transition-all rounded cursor-pointer hover:ring-red-500 hover:ring-2 hover:text-white hover:bg-red-500"
                                             @click="confirmTicketDeletion(ticket.id)">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6">
@@ -238,7 +272,7 @@ const deleteTicket = () => {
                                             </svg></a></td>
                                 </tr>
                                 <tr class="border">
-                                    <td class="px-2 "><a @click="confirmTicketCreation()"
+                                    <td class=""><a @click="confirmTicketCreation"
                                             class="inline-block w-full text-center transition-all rounded cursor-pointer hover:ring-sky-500 hover:ring-2 hover:text-white hover:bg-sky-500"><svg
                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                 stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6">
@@ -248,59 +282,6 @@ const deleteTicket = () => {
                                         </a>
                                     </td>
                                 </tr>
-
-                                <DialogModal :show="confirmingTicketCreation" @close="closeModal">
-                                    <template #title> Créer un ticket pour cet évènement </template>
-
-                                    <template #content>
-                                        <form @submit.prevent="createTicket">
-                                            <div class="space-y-3">
-                                                <div class="w-full">
-                                                    <InputLabel for="name"
-                                                        value="Nom du ticket (Ex: VIP; Particulier; Entreprise)"
-                                                        class="text-lg" />
-                                                    <TextInput id="name" type="text" class="block w-full mt-1 text-lg"
-                                                        v-model="formCreateTicket.name"
-                                                        @input="formCreateTicket.validate('name')" />
-                                                    <InputError :message="formCreateTicket.errors.name" class="mt-2" />
-                                                </div>
-                                                <div class="w-full">
-                                                    <InputLabel for="price" value="Prix du ticket (Ex: 25.00)"
-                                                        class="text-lg" />
-                                                    <TextInput id="price" type="number"
-                                                        class="block w-full mt-1 text-lg"
-                                                        v-model="formCreateTicket.price"
-                                                        @input="formCreateTicket.validate('price')" />
-                                                    <InputError :message="formCreateTicket.errors.price" class="mt-2" />
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </template>
-
-                                    <template #footer>
-                                        <SecondaryButton @click="closeModal"> Annuler </SecondaryButton>
-
-                                        <div class="flex justify-center">
-                                            <ActionMessage :on="formCreateTicket.recentlySuccessful"
-                                                class="text-green-500 me-3 ms-3">
-                                                Sauvegardé.
-                                            </ActionMessage>
-
-                                            <PrimaryButton :class="{ 'opacity-25': formCreateTicket.processing }"
-                                                :disabled="formCreateTicket.processing" @click="createTicket"
-                                                class="mx-auto">
-                                                Sauvegarder
-                                            </PrimaryButton>
-                                        </div>
-
-                                        <!-- <PrimaryButton class="ms-3"
-                                            :class="{ 'opacity-25': confirmingTicketCreation.processing }"
-                                            :disabled="confirmingTicketCreation.processing" @click="createTicket">
-                                            Supprimer
-                                        </PrimaryButton> -->
-                                    </template>
-                                </DialogModal>
-
                             </tbody>
                         </table>
                     </div>
@@ -322,4 +303,82 @@ const deleteTicket = () => {
             </form>
         </div>
     </AppLayout>
+
+    <DialogModal :show="confirmingTicketCreation" @close="closeModal">
+        <template #title> Créer un ticket pour cet évènement </template>
+
+        <template #content>
+            <form @submit.prevent="createTicket">
+                <div class="space-y-3">
+                    <div class="w-full">
+                        <InputLabel for="name" value="Nom du ticket (Ex: VIP; Particulier; Entreprise)"
+                            class="text-lg" />
+                        <TextInput id="name" type="text" class="block w-full mt-1 text-lg"
+                            v-model="formCreateTicket.name" @input="formCreateTicket.validate('name')" />
+                        <InputError :message="formCreateTicket.errors.name" class="mt-2" />
+                    </div>
+                    <div class="w-full">
+                        <InputLabel for="price" value="Prix du ticket (Ex: 25.00)" class="text-lg" />
+                        <TextInput id="price" type="number" class="block w-full mt-1 text-lg"
+                            v-model="formCreateTicket.price" @input="formCreateTicket.validate('price')" />
+                        <InputError :message="formCreateTicket.errors.price" class="mt-2" />
+                    </div>
+                </div>
+            </form>
+        </template>
+
+        <template #footer>
+            <SecondaryButton @click="closeModal"> Annuler </SecondaryButton>
+
+            <div class="flex justify-center">
+                <ActionMessage :on="formCreateTicket.recentlySuccessful" class="text-green-500 me-3 ms-3">
+                    Ticket sauvegardé.
+                </ActionMessage>
+
+                <PrimaryButton :class="{ 'opacity-25': formCreateTicket.processing }"
+                    :disabled="formCreateTicket.processing" @click="createTicket" class="mx-auto">
+                    Sauvegarder
+                </PrimaryButton>
+            </div>
+        </template>
+    </DialogModal>
+
+    <DialogModal :show="confirmingTicketUpdating" @close="closeModal">
+        <template #title> Éditer un ticket pour cet évènement </template>
+
+        <template #content>
+            <form @submit.prevent="updateTicket">
+                <div class="space-y-3">
+                    <div class="w-full">
+                        <InputLabel for="name" value="Nom du ticket (Ex: VIP; Particulier; Entreprise)"
+                            class="text-lg" />
+                        <TextInput id="name" type="text" class="block w-full mt-1 text-lg"
+                            v-model="formUpdateTicket.name" @input="formUpdateTicket.validate('name')" />
+                        <InputError :message="formUpdateTicket.errors.name" class="mt-2" />
+                    </div>
+                    <div class="w-full">
+                        <InputLabel for="price" value="Prix du ticket (Ex: 25.00)" class="text-lg" />
+                        <TextInput id="price" type="number" class="block w-full mt-1 text-lg"
+                            v-model="formUpdateTicket.price" @input="formUpdateTicket.validate('price')" />
+                        <InputError :message="formUpdateTicket.errors.price" class="mt-2" />
+                    </div>
+                </div>
+            </form>
+        </template>
+
+        <template #footer>
+            <SecondaryButton @click="closeModal"> Annuler </SecondaryButton>
+
+            <div class="flex justify-center">
+                <ActionMessage :on="formUpdateTicket.recentlySuccessful" class="text-green-500 me-3 ms-3">
+                    Ticket sauvegardé.
+                </ActionMessage>
+
+                <PrimaryButton :class="{ 'opacity-25': formUpdateTicket.processing }"
+                    :disabled="formUpdateTicket.processing" @click="updateTicket" class="mx-auto">
+                    Sauvegarder
+                </PrimaryButton>
+            </div>
+        </template>
+    </DialogModal>
 </template>

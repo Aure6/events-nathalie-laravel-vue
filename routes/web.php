@@ -56,6 +56,7 @@ Route::middleware('auth', HandlePrecognitiveRequests::class)->group(function () 
     Route::delete('/admin/events/delete', [AdminEventController::class, 'delete'])->name('admin.events.delete');
 
     Route::post('/admin/tickets/store', [TicketController::class, 'store'])->name('tickets.store');
+    Route::put('/admin/tickets/{ticket}/update', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('/admin/tickets/{ticket}/destroy', [TicketController::class, 'destroy'])->name('tickets.destroy');
 
     Route::get('/events/{event}/registrations', [RegistrationController::class, 'index'])->name('registrations.index');

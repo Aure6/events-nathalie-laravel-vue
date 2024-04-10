@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    public function store(StoreTicketRequest $request)/* : RedirectResponse */
+    public function store(StoreTicketRequest $request)
     {
         $validated = $request->validated();
 
@@ -20,6 +20,18 @@ class TicketController extends Controller
         Ticket::create($validated);
 
         $request->session()->flash('flash.banner', "Le ticket a bien été créée.");
+
+        return redirect()->back();
+    }
+    public function update(StoreTicketRequest $request, string $id)
+    {
+        $ticket = Ticket::findOrFail($id);
+
+        $validated = $request->validated();
+
+        $ticket->update($validated);
+
+        $request->session()->flash('flash.banner', "Le ticket a bien été sauvegardé.");
 
         return redirect()->back();
     }
