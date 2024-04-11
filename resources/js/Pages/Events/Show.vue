@@ -138,7 +138,7 @@ const CreateRegistration = () => {
                         </div>
                     </div>
                     <form @submit.prevent="CreateRegistration" class="max-w-2xl py-6 mx-auto space-y-4 sm:px-6 lg:px-8">
-                        <h3 class="text-xl">Inscrivez-vous!</h3>
+                        <h3 class="text-xl">Inscrivez-vous</h3>
                         <!-- <TextInput id="event_id" v-model="formCreateRegistration.event_id" type="hidden"
                             @input="formCreateRegistration.validate('event_id')" /> -->
                         <!-- name -->
@@ -170,6 +170,32 @@ const CreateRegistration = () => {
                             <InputError :message="formCreateRegistration.errors.company_name" class="mt-2" />
                         </div>
 
+
+                        <h3 class="mb-4 text-lg font-semibold text-gray-900">Billets</h3>
+                        <ul>
+                            <li v-for="ticket in event.tickets" :key="ticket.id"
+                                class="flex items-center bg-white border border-gray-200 rounded ps-4 ">
+                                <input :id="ticket.id" type="radio" :value="ticket.id" name="bordered-radio"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
+                                <label :for="ticket.id" class="w-full py-4 text-sm font-medium text-gray-900 ms-2 ">
+                                    {{ ticket.name }} <br>
+                                    {{ ticket.price }} €
+                                </label>
+                            </li>
+                        </ul>
+
+                        <div class="">
+                            <InputLabel for="tickets_quantity" value="Quantité de billets" />
+                            <select name="" id=""></select>
+                            <!-- <select id="organizer_id" v-model="formUpdateEvent.organizer_id"
+                                class="block w-full mt-1 border-0" @input="formUpdateEvent.validate('organizer_id')">
+                                <option v-for="contact in contacts" :key="contact.id" :value="contact.id">
+                                    {{ contact.contactable.name }}
+                                </option>
+                            </select>
+                            <InputError :message="formUpdateEvent.errors.organizer_id" class="mt-2" /> -->
+                        </div>
+
                         <div class="flex justify-center">
                             <ActionMessage :on="formCreateRegistration.recentlySuccessful" class="me-3">
                                 Inscription envoyée avec succès.
@@ -177,7 +203,7 @@ const CreateRegistration = () => {
 
                             <PrimaryButton :class="{ 'opacity-25': formCreateRegistration.processing }"
                                 :disabled="formCreateRegistration.processing" class="mx-auto">
-                                Envoyer
+                                Procéder au paiement
                             </PrimaryButton>
                         </div>
                     </form>

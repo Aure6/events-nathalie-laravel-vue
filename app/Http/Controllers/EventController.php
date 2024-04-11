@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Registration;
+use App\Models\Ticket;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -63,7 +64,7 @@ class EventController extends Controller
         $event->place = $place;
         $event->organizer = $organizer;
 
-        // $event->place_name =
+        $event->tickets = Ticket::where('event_id', '=', $event->id)->oldest()->orderBy('price', 'asc')->get();
 
         return Inertia::render('Events/Show', [
             'event' => $event,

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('price');
+            $table->decimal('price', 8, 2); // 8 is the total number of digits, and 2 is the number of decimal places; can store numbers up to 999999.99
+            // $table->string('price');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
