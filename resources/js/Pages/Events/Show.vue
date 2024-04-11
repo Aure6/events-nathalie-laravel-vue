@@ -186,14 +186,23 @@ const CreateRegistration = () => {
 
                         <div class="">
                             <InputLabel for="tickets_quantity" value="Quantité de billets" />
-                            <select name="" id=""></select>
-                            <!-- <select id="organizer_id" v-model="formUpdateEvent.organizer_id"
-                                class="block w-full mt-1 border-0" @input="formUpdateEvent.validate('organizer_id')">
-                                <option v-for="contact in contacts" :key="contact.id" :value="contact.id">
-                                    {{ contact.contactable.name }}
-                                </option>
-                            </select>
-                            <InputError :message="formUpdateEvent.errors.organizer_id" class="mt-2" /> -->
+                            <TextInput id="tickets_quantity" type="number" class="block mt-1"
+                                v-model="formCreateRegistration.tickets_quantity"
+                                @input="formCreateRegistration.validate('tickets_quantity')" list="quantity-list"
+                                min="1" />
+                            <InputError :message="formCreateRegistration.errors.tickets_quantity" class="mt-2" />
+                            <!-- <datalist id="quantity-list">
+                                <option value="1">
+                                <option value="2">
+                                <option value="3">
+                                <option value="4">
+                                <option value="5">
+                                <option value="6">
+                                <option value="7">
+                                <option value="8">
+                                <option value="9">
+                                <option value="10">
+                            </datalist> -->
                         </div>
 
                         <div class="flex justify-center">
