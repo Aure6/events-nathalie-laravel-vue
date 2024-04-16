@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use Exception;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function charge(String $product, $price)
+    public function purchase(String $product, $price)
     {
-        $customer = Customer::findOrFail($customerId);
+        // $customer = Customer::findOrFail($customerId);
         return view('payment', [
-            'customer' => $customer,
-            'intent' => $customer->createSetupIntent(),
+            /* 'customer' => $customer, */
+            /* 'intent' => $customer->createSetupIntent(), */
             'product' => $product,
             'price' => $price
         ]);
@@ -24,14 +25,20 @@ class PaymentController extends Controller
         // $stripeCharge = (new User)->charge(100, $paymentMethod);
 
 
-        $user = Auth::user();
+        // $user = Auth::user();
         $paymentMethod = $request->input('payment_method');
-        $user->createOrGetStripeCustomer();
-        $user->addPaymentMethod($paymentMethod);
+        $customer = new Customer;
+        $customer->createOrGetStripeCustomer();
+        $customer->addPaymentMethod($paymentMethod);
+        // try {
+        //     $user->charge($price * 100, $paymentMethod);
+        // } catch (\Exception $e) {
+        //     return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
+        // }
         try {
-            $user->charge($price * 100, $paymentMethod);
-        } catch (\Exception $e) {
-            return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
+            $customer->charge($price * 100, $paymentMethod);
+        } catch (Exception $e) {
+            return back()->withErrors(['message' => 'Error creating subscription or something else. ' . $e->getMessage()]);
         }
         return redirect('home');
     }

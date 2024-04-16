@@ -172,7 +172,7 @@ const CreateRegistration = () => {
 
                         <div class="flex justify-center">
                             <ActionMessage :on="formCreateRegistration.recentlySuccessful" class="me-3">
-                                Inscription envoyée avec succès.
+                                Envoyée avec succès.
                             </ActionMessage>
 
                             <PrimaryButton :class="{ 'opacity-25': formCreateRegistration.processing }"

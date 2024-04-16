@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('company_name')->nullable();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('customer_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

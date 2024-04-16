@@ -39,7 +39,7 @@ Route::get('/events/{id}/show', [EventController::class, 'show'])->name('events.
 Route::get('/future_events', [FutureEventController::class, 'index'])->name('future.index');
 Route::get('/future_events/{id}/show', [FutureEventController::class, 'show'])->name('future.show');
 
-Route::get('/payment/{string}/{price}', [PaymentController::class, 'charge'])->name('goToPayment');
+Route::get('/payment/{string}/{price}', [PaymentController::class, 'purchase'])->name('goToPayment');
 Route::post('payment/process-payment/{string}/{price}', [PaymentController::class, 'processPayment'])->name('processPayment');
 
 Route::middleware(HandlePrecognitiveRequests::class)->group(function () {

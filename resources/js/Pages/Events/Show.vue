@@ -5,6 +5,8 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
+import PrimaryLink from "@/Components/PrimaryLink.vue";
+import SecondaryLink from "@/Components/SecondaryLink.vue";
 import { useForm as usePrecognitionForm } from "laravel-precognition-vue-inertia";
 
 const props = defineProps(["event", "registrations_number"]);
@@ -135,6 +137,16 @@ const CreateRegistration = () => {
                                     {{ event.organizer.email }}
                                 </div> -->
                             </div>
+                            <div class="flex flex-col gap-2 mx-auto w-fit">
+                                <PrimaryLink :href="route('admin.events.create')"
+                                    class="justify-center h-10 text-center bg-green-700 rounded-full">
+                                    <span></span>Je m'inscris
+                                </PrimaryLink>
+                                <SecondaryLink :href="route('admin.events.create')"
+                                    class="text-green-700 border-green-700 rounded-full">
+                                    Je suis intéressé
+                                </SecondaryLink>
+                            </div>
                         </div>
                     </div>
                     <form @submit.prevent="CreateRegistration" class="max-w-2xl py-6 mx-auto space-y-4 sm:px-6 lg:px-8">
@@ -173,7 +185,7 @@ const CreateRegistration = () => {
 
                         <h3 class="mb-4 text-lg font-semibold text-gray-900">Billets</h3>
                         <ul>
-                            <li v-for="ticket in event.tickets" :key="ticket.id"
+                            <li v-for=" ticket  in  event.tickets " :key="ticket.id"
                                 class="flex items-center bg-white border border-gray-200 rounded ps-4 ">
                                 <input :id="ticket.id" type="radio" :value="ticket.id" name="bordered-radio"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ">
